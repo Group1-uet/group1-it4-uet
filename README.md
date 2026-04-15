@@ -15,9 +15,9 @@ Dự án được phát triển cho môn **Lập trình nâng cao** tại **Đ�
 ## 👥 Thành viên nhóm
 | STT | Họ và tên | MSSV | Vai trò |
 | :--- | :--- | :--- | :--- |
-| 1 | **Nguyễn Ngọc Linh** | 22028212 | Leader / Backend |
+| 1 | **Nguyễn Ngọc Linh** | 22028212 | Developer / Backend |
 | 2 | **Nguyễn Bá Thủy** | 22028218 | Frontend / JavaFX |
-| 3 | **Bùi Minh Lâm** | 22028230 | Developer / Database |
+| 3 | **Bùi Minh Lâm** | 22028230 | Leader / Database |
 
 ## 🏗 Kiến trúc Hệ thống
 Hệ thống tuân thủ mô hình phân tầng để tách biệt giao diện, nghiệp vụ và dữ liệu:
