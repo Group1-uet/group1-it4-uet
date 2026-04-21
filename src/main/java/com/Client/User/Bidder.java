@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+package com.Client.User;
 
 public class Bidder extends User{
     public Bidder(String id, String username, String password, String role) {

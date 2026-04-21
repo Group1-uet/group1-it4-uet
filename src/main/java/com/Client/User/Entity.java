@@ -1,3 +1,5 @@
+package com.Client.User;
+
 public abstract class Entity {
     private String id;
 
