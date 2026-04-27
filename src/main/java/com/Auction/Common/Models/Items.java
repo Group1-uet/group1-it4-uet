@@ -1,4 +1,4 @@
-package com.Client.User;
+package com.Auction.Common.Models;
 
 import java.time.LocalDate;
 

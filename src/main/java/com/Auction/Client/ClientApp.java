@@ -1,4 +1,4 @@
-package com.Client;
+package com.Auction.Client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,7 @@ public class ClientApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/Client/Controller/LoginController.fxml")
+                getClass().getResource("/com/Auction/Client/Controller/LoginController.fxml")
         );
 
         Parent root = loader.load();

@@ -1,10 +1,9 @@
-package com.Client.Controller;
+package com.Auction.Client.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -15,7 +14,7 @@ public class RegisterController {
     private void handleLoginNavigation(ActionEvent event) {
         try {
             // Tải lại file LoginController.fxml
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("/com/Client/Controller/LoginController.fxml"));
+            Parent loginRoot = FXMLLoader.load(getClass().getResource("/com/Auction/Client/Controller/LoginController.fxml"));
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

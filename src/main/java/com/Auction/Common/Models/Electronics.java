@@ -1,4 +1,4 @@
-package com.Client.User;
+package com.Auction.Common.Models;
 
 import java.time.LocalDate;
 
@@ -15,4 +15,8 @@ public class Electronics extends Items{
         super(id, name, descrpition, startingPrice, currentPrice, timeStart, timeEnd);
     }
 
+    @Override
+    public void printInfo() {
+
+    }
 }
