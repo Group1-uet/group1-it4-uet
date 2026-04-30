@@ -1,6 +1,8 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.User;
 
-public abstract class User extends Entity{
+import com.Auction.Common.Models.Entity;
+
+public abstract class User extends Entity {
     private String displayName;
     private String username;
     private String password;

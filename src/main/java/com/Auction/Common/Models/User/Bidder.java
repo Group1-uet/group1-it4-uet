@@ -1,4 +1,4 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.User;
 
 public class Bidder extends User{
     private double balance;
@@ -19,11 +19,6 @@ public class Bidder extends User{
 
     public void setBalance(double balance) {
         this.balance = balance;
-    }
-
-    @Override
-    public void printInfo() {
-
     }
 
     public boolean canAfford(double amount) {

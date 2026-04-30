@@ -1,4 +1,4 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.User;
 
 public class Admin extends User{
     public Admin(String displayName, String username, String password) {
@@ -10,9 +10,4 @@ public class Admin extends User{
         return UserRole.ADMIN;
     }
 
-
-    @Override
-    public void printInfo() {
-
-    }
 }
