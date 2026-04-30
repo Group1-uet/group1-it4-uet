@@ -12,7 +12,7 @@ public class BidTransaction extends Entity {
     private final double amount;
 
     public BidTransaction(String auctionId, String bidderId, String bidderName,
-                          double amount, Instant timestamp, boolean automatic) {
+                          double amount, Instant timestamp) {
         super();
         this.auctionId = Objects.requireNonNull(auctionId, "auctionId");
         this.bidderId = Objects.requireNonNull(bidderId, "bidderId");

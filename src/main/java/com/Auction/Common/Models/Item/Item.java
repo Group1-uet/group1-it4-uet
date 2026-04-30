@@ -38,5 +38,6 @@ public abstract class Item extends Entity {
     }
 
     public abstract String getCategory();
+}
 
 
