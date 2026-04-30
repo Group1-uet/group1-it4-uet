@@ -3,13 +3,24 @@ package com.Auction.Common.Models.Item;
 import java.time.LocalDate;
 
 public class Vehicle extends Item{
+
+    private String make;
     private String model;
     private int year;
 
-    public Vehicle(String name, String description, String sellerId, String model, int year) {
+    public Vehicle(String name, String description, String sellerId, String make, String model, int year) {
         super(name, description, sellerId);
+        this.make = make == null ? "" : make;
         this.model = model == null ? "" : model;
         this.year = year;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make == null ? "" : make;
     }
 
     public String getModel() {
