@@ -112,10 +112,10 @@ public class Auction extends Entity {
     }
 
     /**
-    * Bắt đầu vòng đời của 1 phiên đấu giá: Được làm mới dựa trên trạng thái hiện tại
-    * Được gọi bởi Schedule tick của máy chủ
-    * @return true nếu thay đổi trạng thái (thông báo cho bên theo dõi)
-    */
+     * Bắt đầu vòng đời của 1 phiên đấu giá: Được làm mới dựa trên trạng thái hiện tại
+     * Được gọi bởi Schedule tick của máy chủ
+     * @return true nếu thay đổi trạng thái (thông báo cho bên theo dõi)
+     */
 
 
     public boolean refreshState() {
