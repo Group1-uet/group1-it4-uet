@@ -1,0 +1,91 @@
+.root {
+    /* Sử dụng font hệ thống mượt mà */
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f5f6fa;
+}
+
+/* --- UI CARD (Thẻ chứa form) --- */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    /* Hiệu ứng đổ bóng nhẹ nhàng */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 15, 0, 0, 5);
+}
+
+/* --- Typography --- */
+.title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b7280;
+}
+
+.label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #374151;
+}
+
+/* --- Input Fields --- */
+.text-field, .password-field {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-background-color: white;
+    -fx-padding: 8 12; /* Làm ô nhập rộng rãi hơn */
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #2563eb; /* Màu xanh khi click vào */
+    -fx-border-width: 1.5;
+    -fx-background-color: #f9fafb;
+}
+
+/* --- Buttons --- */
+.button {
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-padding: 8 16;
+}
+
+.primary {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.primary:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+/* Nút phụ (như nút Register) */
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2563eb;
+    -fx-underline: true;
+}
+
+.secondary-button:hover {
+    -fx-text-fill: #1d4ed8;
+}
+
+/* --- Alerts & Others --- */
+.error {
+    -fx-text-fill: #dc2626;
+    -fx-font-size: 12px;
+    -fx-font-weight: normal;
+}
+
+.badge {
+    -fx-background-color: #e5e7eb;
+    -fx-text-fill: #1f2937;
+    -fx-padding: 4 10 4 10;
+    -fx-background-radius: 12;
+    -fx-font-weight: bold;
+}
