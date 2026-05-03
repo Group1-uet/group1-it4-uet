@@ -1,21 +1,42 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.Auction;
+
+import com.Auction.Common.Models.Entity;
 
 import java.time.Instant;
+import java.util.Objects;
 
-import java.time.LocalDateTime;
+public class BidTransaction extends Entity {
+    private final String auctionId;
+    private final String bidderId;
+    private final String bidderName;
+    private final double amount;
 
-public class BidTransaction {
-    private Bidder bidder;
-    private double amount;
-    private LocalDateTime time;
-
-    public BidTransaction(Bidder bidder, double amount) {
-        this.bidder = bidder;
+    public BidTransaction(String auctionId, String bidderId, String bidderName,
+                          double amount, Instant timestamp, boolean automatic) {
+        super();
+        this.auctionId = Objects.requireNonNull(auctionId, "auctionId");
+        this.bidderId = Objects.requireNonNull(bidderId, "bidderId");
+        this.bidderName = bidderName == null ? bidderId : bidderName;
+        if (amount <= 0) {
+            throw new IllegalArgumentException("amount must be > 0");
+        }
         this.amount = amount;
-        this.time = LocalDateTime.now();
     }
 
-    public String toString() {
-        return bidder.getName() + " bid " + amount + " at " + time;
+    public String getAuctionId() {
+        return auctionId;
     }
+
+    public String getBidderId() {
+        return bidderId;
+    }
+
+    public String getBidderName() {
+        return bidderName;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
 }
