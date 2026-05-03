@@ -1,15 +1,39 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.Item;
 
 import java.time.LocalDate;
 
-public class Electronics extends Item {
+public class Electronics extends Item{
 
-    public Electronics(String id, String name, double price) {
-        super(id, name, price);
+    private String brand;
+    private int warrantyMonths;
+
+    public Electronics(String name, String description, String sellerId,
+                       String brand, int warrantyMonths) {
+        super(name, description, sellerId);
+        this.brand = brand == null ? "" : brand;
+        this.warrantyMonths = warrantyMonths;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand == null ? "" : brand;
+    }
+
+    public int getWarrantyMonths() {
+        return warrantyMonths;
+    }
+
+    public void setWarrantyMonths(int warrantyMonths) {
+        this.warrantyMonths = warrantyMonths;
     }
 
     @Override
-    public void printInfo() {
-        System.out.println("Electronics: " + name + " - " + startingPrice);
+    public String getCategory() {
+        return "Electronics";
     }
+
+
 }

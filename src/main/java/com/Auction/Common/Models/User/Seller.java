@@ -1,19 +1,23 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.User;
 
-import com.Auction.Common.Models.Item.Item;
+public class Seller extends User{
+    private double earnings;
 
-public class Seller extends User {
-
-    public Seller(String id, String name) {
-        super(id, name, UserRole.SELLER);
+    public Seller(String displayName, String username, String password) {
+        super(displayName, username, password);
+        this.earnings = 0.0;
     }
 
-    public Item createItem(String type, String id, String name, double price) {
-        try {
-            return ItemFactory.createItem(type, id, name, price);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Create item failed: " + e.getMessage());
-            return null;
-        }
+    @Override
+    public UserRole getRole() {
+        return UserRole.SELLER;
+    }
+
+    public double getEarnings() {
+        return earnings;
+    }
+
+    public void addEarnings(double amount) {
+        this.earnings += amount;
     }
 }

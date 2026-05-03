@@ -1,23 +1,34 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.User;
 
-public class Bidder extends User implements Observer {
+public class Bidder extends User{
+    private double balance;
 
-    public Bidder(String id, String name) {
-        super(id, name, UserRole.BIDDER);
-    }
-
-    public void placeBid(Auction auction, double amount) {
-        try {
-            auction.placeBid(this, amount);
-        } catch (Exception e) {
-            System.out.println(name + " failed: " + e.getMessage());
-        }
+    public Bidder(String displayName, String username, String password) {
+        super(displayName, username, password);
+        this.balance = 0.0;
     }
 
     @Override
-    public void update(String message) {
-        System.out.println("[Realtime] " + name + ": " + message);
+    public UserRole getRole() {
+        return UserRole.BIDDER;
     }
 
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public boolean canAfford(double amount) {
+        return balance >= amount;
+    }
+
+    public void deductBalance(double amount) {
+        if (canAfford(amount)) {
+            this.balance -= amount;
+        }
+    }
 
 }

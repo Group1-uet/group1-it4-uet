@@ -1,22 +1,38 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.User;
+
+import com.Auction.Common.Models.Entity;
 
 public abstract class User extends Entity {
-    protected String name;
-    protected UserRole role;
+    private String displayName;
+    private String username;
+    private String password;
 
-    public User(String id, String name, UserRole role) {
-        super(id);
-        this.name = name;
-        this.role = role;
+    public User(String displayName, String username, String password) {
+        super();
+        this.displayName = displayName;
+        this.username = username;
+        this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public UserRole getRole() {
-        return role;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public abstract UserRole getRole();
+
 }
+
 
 

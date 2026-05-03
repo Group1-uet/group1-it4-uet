@@ -1,21 +1,36 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.Item;
 
-public class Vehicle extends Item {
+import java.time.LocalDate;
 
-    private String brand;
+public class Vehicle extends Item{
+    private String model;
     private int year;
 
-    public Vehicle(String id, String name, double price, String brand, int year) {
-        super(id, name, price);
-        this.brand = brand;
+    public Vehicle(String name, String description, String sellerId, String model, int year) {
+        super(name, description, sellerId);
+        this.model = model == null ? "" : model;
+        this.year = year;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model == null ? "" : model;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
         this.year = year;
     }
 
     @Override
-    public void printInfo() {
-        System.out.println("Vehicle: " + name +
-                " | Brand: " + brand +
-                " | Year: " + year +
-                " | Price: " + startingPrice);
+    public String getCategory() {
+        return "Vehicle";
     }
+
 }

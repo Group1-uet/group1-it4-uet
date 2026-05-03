@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public abstract class Entity implements Serializable {
+public abstract class Entity {
 
-    private static final long serialVersionUID = 1L;
     private final String id;
 
     public Entity() {
@@ -21,21 +20,5 @@ public abstract class Entity implements Serializable {
         return id;
     }
 
-    public abstract void printInfo();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Entity entity)) {
-            return false;
-        }
-        return id.equals(entity.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    // public abstract void printInfo();
 }

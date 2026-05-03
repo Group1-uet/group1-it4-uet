@@ -1,18 +1,42 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.Item;
+
+import com.Auction.Common.Models.Entity;
+
+import java.util.Objects;
 
 public abstract class Item extends Entity {
-    protected String name;
-    protected double startingPrice;
 
-    public Item(String id, String name, double startingPrice) {
-        super(id);
-        this.name = name;
-        this.startingPrice = startingPrice;
+    private String name;
+    private String description;
+    private final String sellerId;
+
+    public Item(String name, String description, String sellerId) {
+        super();
+        this.name = Objects.requireNonNull(name, "name");
+        this.description = description == null ? "" : description;
+        this.sellerId = Objects.requireNonNull(sellerId, "sellerId");
     }
 
-    public double getStartingPrice() {
-        return startingPrice;
+    public String getName() {
+        return name;
     }
 
-    public abstract void printInfo();
-}
+    public void setName(String name) {
+        this.name = Objects.requireNonNull(name, "name");
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? "" : description;
+    }
+
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public abstract String getCategory();
+
+

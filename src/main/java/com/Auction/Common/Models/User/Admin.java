@@ -1,12 +1,13 @@
-package com.Auction.Common.Models;
+package com.Auction.Common.Models.User;
 
-public class Admin extends User {
-
-    public Admin(String id, String name) {
-        super(id, name, UserRole.ADMIN);
+public class Admin extends User{
+    public Admin(String displayName, String username, String password) {
+        super(displayName, username, password);
     }
 
-    public void endAuction(Auction auction) {
-        auction.end();
+    @Override
+    public UserRole getRole() {
+        return UserRole.ADMIN;
     }
+
 }
