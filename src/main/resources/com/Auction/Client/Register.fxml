@@ -44,7 +44,7 @@
 
             <HBox alignment="CENTER" spacing="5">
                 <Label styleClass="muted" text="Already have an account?" />
-            <Hyperlink text="Sign In" />
+                <Hyperlink id="loginLink" text="Login" onAction="#goToLogin"/>
             </HBox>
         </VBox>
 

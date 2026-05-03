@@ -1,5 +1,4 @@
 .root {
-    /* Sử dụng font hệ thống mượt mà */
     -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     -fx-font-size: 13px;
     -fx-background-color: #f5f6fa;
@@ -9,7 +8,6 @@
 .card {
     -fx-background-color: white;
     -fx-background-radius: 12;
-    /* Hiệu ứng đổ bóng nhẹ nhàng */
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 15, 0, 0, 5);
 }
 
@@ -62,17 +60,6 @@
 
 .primary:hover {
     -fx-background-color: #1d4ed8;
-}
-
-/* Nút phụ (như nút Register) */
-.secondary-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: #2563eb;
-    -fx-underline: true;
-}
-
-.secondary-button:hover {
-    -fx-text-fill: #1d4ed8;
 }
 
 /* --- Alerts & Others --- */
