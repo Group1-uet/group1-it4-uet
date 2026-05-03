@@ -1,6 +1,6 @@
 package com.Auction.Common.Models.Item;
 
-import java.time.LocalDate;
+import com.Auction.Common.Models.Item.Item;
 
 public class Electronics extends Item{
 
