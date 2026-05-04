@@ -19,8 +19,7 @@
         </padding>
 
         <VBox alignment="CENTER" spacing="8">
-            <Label styleClass="title" text="Online Auction" />
-            <Label styleClass="subtitle" text="Sign in to start bidding" />
+            <Label styleClass="title" text="Sign in" />
         </VBox>
 
         <VBox spacing="15">
