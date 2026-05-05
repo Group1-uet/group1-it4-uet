@@ -204,3 +204,104 @@
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
+
+/* Sidebar hiện đại với dải Gradient đứng */
+.sidebar-container {
+    -fx-background-color: linear-gradient(to bottom, #1e293b, #0f172a);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 30, 0, 0, 0);
+}
+
+/* Logo icon phong cách App hiện đại */
+.logo-icon-bg {
+    -fx-background-color: #3b82f6;
+    -fx-background-radius: 12;
+    -fx-pref-width: 45;
+    -fx-pref-height: 45;
+}
+
+.logo-icon {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: 900;
+}
+
+.logo-text {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-letter-spacing: 1px;
+}
+
+/* Sidebar Item (Dùng ToggleButton để giữ trạng thái chọn) */
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 16px;
+    -fx-padding: 15 25;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s;
+}
+
+.nav-item:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-text-fill: white;
+}
+
+.nav-item:selected {
+    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.4), 10, 0, 0, 4);
+}
+
+/* User Card ở cuối Sidebar */
+.sidebar-user-card {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 15;
+    -fx-max-width: 260;
+}
+
+.sidebar-user-name {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.sidebar-user-status {
+    -fx-text-fill: #10b981; /* Màu xanh lá online */
+    -fx-font-size: 11px;
+}
+
+/* Nội dung chính */
+.main-content-area {
+    -fx-background-color: #f8fafc;
+}
+
+.header-greeting {
+    -fx-font-size: 32px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #1e293b;
+}
+
+/* Nút đăng xuất chuyên nghiệp */
+.nav-logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #f87171;
+    -fx-border-color: rgba(248, 113, 113, 0.3);
+    -fx-border-radius: 10;
+    -fx-padding: 10 30;
+}
+
+.nav-logout-btn:hover {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+}
+
+/* Card Title */
+.card-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334155;
+}
