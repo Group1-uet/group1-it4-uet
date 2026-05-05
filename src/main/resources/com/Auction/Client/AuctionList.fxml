@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="1080.0" prefWidth="1920.0" spacing="20" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.AuctionListController">
+    <padding><Insets bottom="30" left="30" right="30" top="30" /></padding>
+
+    <VBox spacing="20" styleClass="card" VBox.vgrow="ALWAYS">
+        <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label styleClass="title" text="Phiên đấu giá đang diễn ra" />
+            <Region HBox.hgrow="ALWAYS" />
+            <TextField fx:id="filterField" prefWidth="400" promptText="Tìm kiếm sản phẩm hoặc danh mục..." />
+            <Button onAction="#onRefresh" text="Làm mới" />
+            <Button onAction="#onOpen" styleClass="primary" text="Xem chi tiết" />
+        </HBox>
+
+        <TableView fx:id="table" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="nameCol" prefWidth="500" text="Tên sản phẩm" />
+                <TableColumn fx:id="categoryCol" prefWidth="300" text="Danh mục" />
+                <TableColumn fx:id="priceCol" prefWidth="300" text="Giá hiện tại" />
+                <TableColumn fx:id="endsCol" prefWidth="300" text="Thời gian kết thúc" />
+                <TableColumn fx:id="stateCol" prefWidth="250" text="Trạng thái" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

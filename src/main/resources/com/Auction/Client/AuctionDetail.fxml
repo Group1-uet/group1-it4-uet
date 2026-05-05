@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="1080.0" prefWidth="1920.0" spacing="20" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.AuctionDetailController">
+    <padding><Insets bottom="30" left="30" right="30" top="30" /></padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <Button onAction="#onBack" text="← Quay lại" />
+        <Label fx:id="titleLabel" styleClass="title" text="Thông tin sản phẩm" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="statusLabel" styleClass="badge" text="Đang diễn ra" />
+    </HBox>
+
+    <SplitPane dividerPositions="0.6" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+        <items>
+            <VBox spacing="25" styleClass="card">
+                <padding><Insets bottom="30" left="30" right="30" top="30" /></padding>
+                <Label fx:id="categoryLabel" styleClass="subtitle" />
+                <TextArea fx:id="descriptionArea" editable="false" VBox.vgrow="ALWAYS" wrapText="true" />
+
+                <HBox spacing="50">
+                    <VBox spacing="10">
+                        <Label styleClass="label" text="GIÁ HIỆN TẠI" />
+                        <Label fx:id="currentPriceLabel" styleClass="title" style="-fx-text-fill: #2563eb; -fx-font-size: 36px;" text="0.00" />
+                    </VBox>
+                    <VBox spacing="10">
+                        <Label styleClass="label" text="THỜI GIAN CÒN LẠI" />
+                        <Label fx:id="timeRemainingLabel" styleClass="title" style="-fx-text-fill: #dc2626; -fx-font-size: 36px;" text="00:00:00" />
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <TextField fx:id="bidAmountField" prefHeight="50" prefWidth="300" promptText="Nhập giá thầu..." />
+                    <Button onAction="#onPlaceBid" prefHeight="50" prefWidth="200" styleClass="primary" text="Gửi giá thầu" />
+                </HBox>
+                <Label fx:id="messageLabel" styleClass="error" />
+            </VBox>
+
+            <VBox spacing="20">
+                <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                    <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
+                    <Label styleClass="label" text="BIẾN ĐỘNG GIÁ" />
+                    <LineChart fx:id="priceChart" createSymbols="false" legendVisible="false">
+                        <xAxis><NumberAxis label="Thời gian" fx:id="xAxis" /></xAxis>
+                        <yAxis><NumberAxis label="Giá ($)" fx:id="yAxis" /></yAxis>
+                    </LineChart>
+                </VBox>
+                <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                    <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
+                    <Label styleClass="label" text="LỊCH SỬ ĐẶT GIÁ" />
+                    <TableView fx:id="bidsTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="bidderCol" prefWidth="250" text="Người thầu" />
+                            <TableColumn fx:id="bidAmountCol" prefWidth="200" text="Số tiền" />
+                            <TableColumn fx:id="bidTimeCol" prefWidth="250" text="Thời gian" />
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+        </items>
+    </SplitPane>
+</VBox>

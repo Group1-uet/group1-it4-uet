@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.MainController">
+
+    <left>
+        <VBox prefWidth="300" styleClass="sidebar">
+            <children>
+                <VBox alignment="CENTER" spacing="10" prefHeight="150">
+                    <Label styleClass="logo-text" text="AUCTION" />
+                    <Label styleClass="logo-subtext" text="HOUSE SYSTEM" />
+                </VBox>
+
+                <Region prefHeight="40" />
+
+                <VBox spacing="10" VBox.vgrow="ALWAYS" styleClass="nav-container">
+                    <padding><Insets left="20" right="20" /></padding>
+                    <Button fx:id="btnAuctions" maxWidth="Infinity" styleClass="nav-button, active" text="Sàn đấu giá">
+                        <graphic><Label styleClass="icon-label" text="" /></graphic> </Button>
+                    <Button fx:id="btnSeller" maxWidth="Infinity" styleClass="nav-button" text="Kênh người bán">
+                        <graphic><Label styleClass="icon-label" text="" /></graphic>
+                    </Button>
+                    <Button fx:id="btnAdmin" maxWidth="Infinity" styleClass="nav-button" text="Quản trị viên">
+                        <graphic><Label styleClass="icon-label" text="" /></graphic>
+                    </Button>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="20" prefHeight="150">
+                    <Separator maxWidth="200" style="-fx-opacity: 0.2;" />
+                    <Button onAction="#onLogout" styleClass="logout-button" text="Đăng xuất" maxWidth="200" />
+                </VBox>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100" styleClass="top-header">
+                <padding><Insets left="40" right="40" /></padding>
+                <VBox alignment="CENTER_LEFT">
+                    <Label styleClass="page-title" text="Hệ thống đấu giá trực tuyến" />
+                    <Label styleClass="subtitle" text="Chào mừng trở lại phiên làm việc của bạn" />
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+
+                <HBox alignment="CENTER" spacing="15" styleClass="user-profile-box">
+                    <VBox alignment="CENTER_RIGHT">
+                        <Label fx:id="userLabel" styleClass="user-name" text="Username" />
+                        <Label styleClass="user-role" text="Thành viên chính thức" />
+                    </VBox>
+                    <Circle radius="25" fill="#3b82f6" /> </HBox>
+            </HBox>
+
+            <StackPane VBox.vgrow="ALWAYS" styleClass="main-content-bg">
+                <padding><Insets bottom="30" left="30" right="30" top="10" /></padding>
+
+                <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" styleClass="modern-tab-pane">
+                    <tabs>
+                        <Tab fx:id="auctionsTab" text="Auctions" />
+                        <Tab fx:id="sellerTab" text="Seller" />
+                        <Tab fx:id="adminTab" text="Admin" />
+                    </tabs>
+                </TabPane>
+            </StackPane>
+        </VBox>
+    </center>
+</BorderPane>
