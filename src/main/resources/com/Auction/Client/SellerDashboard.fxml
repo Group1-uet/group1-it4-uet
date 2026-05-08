@@ -11,10 +11,10 @@
         <padding><Insets bottom="35" left="35" right="35" top="35" /></padding>
 
         <!-- HEADER -->
-        <HBox alignment="CENTER_LEFT" spacing="10">
-            <Button onAction="#onBack" styleClass="icon-btn">
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Button onAction="#onHome" styleClass="primary">
                 <graphic>
-                    <FontIcon iconLiteral="mdi2a-arrow-left" iconSize="24" />
+                    <FontIcon iconColor="white" iconLiteral="fas-home" iconSize="20" />
                 </graphic>
             </Button>
             <Label styleClass="title" text="Đăng sản phẩm" />
@@ -77,7 +77,7 @@
             <Label styleClass="title" text="Sản phẩm bạn đang bán" />
             <Region HBox.hgrow="ALWAYS" />
             <Button onAction="#onRefresh" prefWidth="120" text="Làm mới" />
-            <Button onAction="#onDelete" prefWidth="150" text="Xóa mục chọn" />
+            <Button onAction="#onDelete" prefWidth="160" text="Xóa mục chọn" />
         </HBox>
         <TableView fx:id="myAuctionsTable" VBox.vgrow="ALWAYS">
             <columns>

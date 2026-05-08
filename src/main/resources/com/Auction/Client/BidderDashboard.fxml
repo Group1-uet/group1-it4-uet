@@ -11,12 +11,12 @@
     <VBox maxWidth="450" prefWidth="400" spacing="25" styleClass="card">
         <padding><Insets bottom="30" left="30" right="30" top="30" /></padding>
 
-        <HBox alignment="CENTER_LEFT" spacing="15">
-            <Button onAction="#onBack" styleClass="icon-btn">
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Button onAction="#onHome" styleClass="primary">
                 <graphic>
-                    <FontIcon iconLiteral="fas-arrow-left" iconSize="28" />
+                    <FontIcon iconColor="white" iconLiteral="fas-home" iconSize="20" />
                 </graphic>
-            </Button>x
+            </Button>
             <Label styleClass="title" text="Sàn Đấu Giá" />
         </HBox>
 

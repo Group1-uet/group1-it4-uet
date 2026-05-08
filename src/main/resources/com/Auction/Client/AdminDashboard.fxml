@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<VBox prefHeight="1080.0" prefWidth="1920.0" spacing="30" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.AdminController">
+
+<VBox prefHeight="1080.0" prefWidth="1920.0" spacing="30" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.AdminController">
     <padding><Insets bottom="40" left="40" right="40" top="40" /></padding>
 
     <VBox spacing="20" styleClass="card" VBox.vgrow="SOMETIMES">
         <padding><Insets bottom="30" left="30" right="30" top="30" /></padding>
         <HBox alignment="CENTER_LEFT" spacing="20">
-            <Label styleClass="title" text="Quản lý người dùng hệ thống" />
-            <Region HBox.hgrow="ALWAYS" />
-            <Button onAction="#onReloadUsers" prefWidth="150" text="Làm mới" />
-            <Button onAction="#onMain" styleClass="primary">
+            <Button onAction="#onMain" styleClass="primary" text="Trang chủ" graphicTextGap="10">
                 <graphic>
-                    <FontIcon iconLiteral="fas-home" iconSize="20" iconColor="white" />
+                    <FontIcon iconColor="white" iconLiteral="fas-home" iconSize="20" />
                 </graphic>
-                <text>Trang chủ</text>
             </Button>
+            <Button onAction="#onReloadUsers" text="Làm mới" graphicTextGap="10">
+                <graphic>
+                    <FontIcon iconColor="black" iconLiteral="fas-sync-alt" iconSize="20" />
+                </graphic>
+            </Button>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label styleClass="title" text="Quản lý người dùng hệ thống" />
         </HBox>
         <TableView fx:id="usersTable" prefHeight="350">
             <columns>
@@ -35,10 +44,14 @@
     <VBox spacing="20" styleClass="card" VBox.vgrow="ALWAYS">
         <padding><Insets bottom="30" left="30" right="30" top="30" /></padding>
         <HBox alignment="CENTER_LEFT" spacing="20">
-            <Label styleClass="title" text="Danh sách tất cả phiên đấu giá" />
+            <Button onAction="#onCancel" prefWidth="200" style="-fx-background-color: #dc2626;" styleClass="primary" text="Hủy phiên đã chọn" />
+            <Button onAction="#onReloadUsers" text="Làm mới" graphicTextGap="10">
+                <graphic>
+                    <FontIcon iconColor="black" iconLiteral="fas-sync-alt" iconSize="20" />
+                </graphic>
+            </Button>
             <Region HBox.hgrow="ALWAYS" />
-            <Button onAction="#onReloadAuctions" prefWidth="150" text="Làm mới" />
-            <Button onAction="#onCancel" prefWidth="200" styleClass="primary" style="-fx-background-color: #dc2626;" text="Hủy phiên đã chọn" />
+            <Label styleClass="title" text="Danh sách tất cả phiên đấu giá" />
         </HBox>
         <TableView fx:id="auctionsTable" VBox.vgrow="ALWAYS">
             <columns>

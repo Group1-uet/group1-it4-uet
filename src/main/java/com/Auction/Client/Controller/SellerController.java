@@ -31,7 +31,15 @@ public class SellerController implements Initializable {
 
     }
 
-    public void onBack(ActionEvent actionEvent) {
+    public void onHome(ActionEvent actionEvent) {
+        try {
+            MainController.currentRole = "BIDDER";
+            // Quay về màn hình chính
+            ClientApp.setRoot("MainDashboard");
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            System.out.println("Lỗi: Không thể quay lại MainDashboard từ giao diện Bidder");
+        }
     }
 
     public void onDelete(ActionEvent actionEvent) {

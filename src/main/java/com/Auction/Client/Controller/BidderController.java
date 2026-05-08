@@ -7,7 +7,7 @@ public class BidderController {
     public void onRefresh(ActionEvent actionEvent) {
     }
 
-    public void onBack(ActionEvent actionEvent) {
+    public void onHome(ActionEvent actionEvent) {
         try {
             MainController.currentRole = "BIDDER";
             // Quay về màn hình chính
