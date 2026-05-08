@@ -2,13 +2,24 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <HBox prefHeight="1080.0" prefWidth="1920.0" spacing="30" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.SellerController">
     <padding><Insets bottom="40" left="40" right="40" top="40" /></padding>
 
     <VBox maxWidth="500" prefWidth="450" spacing="20" styleClass="card">
         <padding><Insets bottom="35" left="35" right="35" top="35" /></padding>
-        <Label styleClass="title" text="Đăng sản phẩm" />
+
+        <!-- HEADER -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Button onAction="#onBack" styleClass="icon-btn">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2a-arrow-left" iconSize="24" />
+                </graphic>
+            </Button>
+            <Label styleClass="title" text="Đăng sản phẩm" />
+        </HBox>
+
         <Separator />
 
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">

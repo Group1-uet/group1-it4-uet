@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
 
 public class ClientApp extends Application {
@@ -15,6 +17,10 @@ public class ClientApp extends Application {
         primaryStage = stage;
         primaryStage.setTitle("Online Auction System");
 
+        primaryStage.setFullScreen(false);     // Tắt chế độ toàn màn hình
+        primaryStage.setMaximized(false);      // Không tự động phóng to hết cỡ
+        primaryStage.setResizable(true);
+
         // Mặc định khởi động vào màn hình Login
         setRoot("Login");
         primaryStage.show();
@@ -22,7 +28,7 @@ public class ClientApp extends Application {
 
     // Phương thức dùng để chuyển đổi màn hình (Scene)
     public static void setRoot(String fxml) throws IOException {
-        // Đường dẫn file FXML của bạn (điều chỉnh cho đúng package)
+        // Đường dẫn file FXML (điều chỉnh cho đúng package)
         FXMLLoader fxmlLoader = new FXMLLoader(ClientApp.class.getResource("/com/Auction/Client/" + fxml + ".fxml"));
         Parent root = fxmlLoader.load();
 

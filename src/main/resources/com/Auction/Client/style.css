@@ -305,3 +305,75 @@
     -fx-font-weight: bold;
     -fx-text-fill: #334155;
 }
+
+/* Trang trí tổng thể ComboBox */
+.combo-box {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #ced4da; /* Màu viền giống TextField */
+    -fx-border-radius: 8;
+    -fx-padding: 2 5 2 5;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+/* Khi di chuột qua ComboBox */
+.combo-box:hover {
+    -fx-border-color: #80bdff;
+}
+
+/* Khi ComboBox được chọn (Focus) */
+.combo-box:focused {
+    -fx-border-color: #007bff;
+    -fx-background-color: white;
+}
+
+/* Chỉnh phần chữ hiển thị bên trong */
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #495057;
+    -fx-padding: 5 10 5 10;
+}
+
+/* Trang trí cái nút mũi tên bên phải */
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #6c757d; /* Màu mũi tên */
+}
+
+/* Trang trí danh sách sổ xuống (Popup) */
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+/* Chỉnh màu khi di chuột qua các mục trong danh sách sổ xuống */
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #e9ecef;
+    -fx-text-fill: #007bff;
+}
+
+.icon-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.icon-btn:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.back-icon {
+    -fx-icon-size: 32px;
+    -fx-icon-color: #2196F3; /* Bạn cũng có thể đổi màu tại đây */
+}
+
+/* Hiệu ứng phóng to nhẹ khi di chuột vào nút */
+.icon-btn:hover .back-icon {
+    -fx-icon-size: 35px;
+}

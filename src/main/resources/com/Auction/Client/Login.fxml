@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.LoginController">
+<StackPane prefHeight="800" prefWidth="1200" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.LoginController">
 
     <VBox alignment="CENTER" maxHeight="450" maxWidth="400" spacing="25" styleClass="card">
 

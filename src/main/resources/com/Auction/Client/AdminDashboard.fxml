@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <VBox prefHeight="1080.0" prefWidth="1920.0" spacing="30" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.AdminController">
     <padding><Insets bottom="40" left="40" right="40" top="40" /></padding>
 
@@ -12,6 +13,12 @@
             <Label styleClass="title" text="Quản lý người dùng hệ thống" />
             <Region HBox.hgrow="ALWAYS" />
             <Button onAction="#onReloadUsers" prefWidth="150" text="Làm mới" />
+            <Button onAction="#onMain" styleClass="primary">
+                <graphic>
+                    <FontIcon iconLiteral="fas-home" iconSize="20" iconColor="white" />
+                </graphic>
+                <text>Trang chủ</text>
+            </Button>
         </HBox>
         <TableView fx:id="usersTable" prefHeight="350">
             <columns>

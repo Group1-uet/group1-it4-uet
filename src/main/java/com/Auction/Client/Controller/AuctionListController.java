@@ -1,6 +1,5 @@
 package com.Auction.Client.Controller;
 
-import com.mysql.cj.protocol.Message;
 import javafx.event.ActionEvent;
 
 import java.awt.*;
