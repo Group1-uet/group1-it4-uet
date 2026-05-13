@@ -12,7 +12,6 @@ public class ClientService {
     private BufferedReader in;
     private Gson gson = new Gson();
 
-    // Dùng Singleton để mọi Controller đều gọi được chung 1 kết nối
     public static ClientService getInstance() {
         if (instance == null) instance = new ClientService();
         return instance;
@@ -30,13 +29,33 @@ public class ClientService {
         out.println(gson.toJson(msg));
     }
 
-    // Hàm main dùng TẠM THỜI để bạn test thử xem Client có gọi được Server không
+    // --- ĐÂY LÀ PHƯƠNG THỨC MỚI THÊM VÀO ---
+    public String sendLoginRequest(String username, String password) {
+        try {
+            // 1. Gửi yêu cầu đăng nhập
+            Message loginMsg = new Message("LOGIN", username + "|" + password);
+            out.println(gson.toJson(loginMsg));
+
+            // 2. Nhận phản hồi từ Server
+            String responseJson = in.readLine();
+            Message res = gson.fromJson(responseJson, Message.class);
+
+            // Trả về kết quả (LOGIN_SUCCESS hoặc LOGIN_FAIL)
+            return res.getType();
+        } catch (IOException e) {
+            System.err.println("Lỗi gửi yêu cầu đăng nhập: " + e.getMessage());
+            return "ERROR";
+        }
+    }
+
     public static void main(String[] args) {
         try {
             ClientService.getInstance().connect();
-            ClientService.getInstance().sendRequest("TEST_CONNECTION", "Hello Server!");
+            // Test thử hàm đăng nhập mới
+            String result = ClientService.getInstance().sendLoginRequest("testuser", "123456");
+            System.out.println("Kết quả đăng nhập thử: " + result);
         } catch (IOException e) {
-            System.out.println("Không thể kết nối đến Server. Bạn đã chạy Server chưa?");
+            System.out.println("Không thể kết nối đến Server.");
         }
     }
 }
