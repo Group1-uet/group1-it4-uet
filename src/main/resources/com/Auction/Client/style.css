@@ -1,21 +1,15 @@
+/* ========== GLOBAL STYLES ========== */
 .root {
     -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    -fx-font-size: 13px;
-    -fx-background-color: #f5f6fa;
+    -fx-font-size: 16px;
+    -fx-background-color: #f1f5f9;
 }
 
-/* --- UI CARD (Thẻ chứa form) --- */
-.card {
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 15, 0, 0, 5);
-}
-
-/* --- Typography --- */
+/* ========== TYPOGRAPHY ========== */
 .title {
-    -fx-font-size: 26px;
+    -fx-font-size: 32px;
     -fx-font-weight: bold;
-    -fx-text-fill: #111827;
+    -fx-text-fill: #1e293b;
 }
 
 .subtitle {
@@ -25,86 +19,29 @@
 
 .label {
     -fx-font-weight: bold;
-    -fx-text-fill: #374151;
+    -fx-text-fill: #475569;
 }
 
-/* --- Input Fields --- */
-.text-field, .password-field {
-    -fx-background-radius: 8;
-    -fx-border-radius: 8;
-    -fx-border-color: #d1d5db;
-    -fx-border-width: 1;
-    -fx-background-color: white;
-    -fx-padding: 8 12; /* Làm ô nhập rộng rãi hơn */
-    -fx-transition: all 0.2s ease-in-out;
+.muted {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 13px;
 }
 
-.text-field:focused, .password-field:focused {
-    -fx-border-color: #2563eb; /* Màu xanh khi click vào */
-    -fx-border-width: 1.5;
-    -fx-background-color: #f9fafb;
-}
-
-/* --- Buttons --- */
-.button {
-    -fx-background-radius: 8;
-    -fx-cursor: hand;
-    -fx-padding: 8 16;
-}
-
-.primary {
-    -fx-background-color: #2563eb;
-    -fx-text-fill: white;
+.card-title {
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
+    -fx-text-fill: #334155;
 }
 
-.primary:hover {
-    -fx-background-color: #1d4ed8;
-}
-
-/* --- Alerts & Others --- */
-.error {
-    -fx-text-fill: #dc2626;
-    -fx-font-size: 12px;
-    -fx-font-weight: normal;
-}
-
-.badge {
-    -fx-background-color: #e5e7eb;
-    -fx-text-fill: #1f2937;
-    -fx-padding: 4 10 4 10;
-    -fx-background-radius: 12;
-    -fx-font-weight: bold;
-}
-
-/* --- Cấu hình chung cho màn hình 1080p --- */
-.root {
-    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    -fx-font-size: 16px; /* Tăng kích thước chữ cho dễ đọc trên màn hình lớn */
-    -fx-background-color: #f1f5f9; /* Nền xanh xám nhạt cực sang */
-}
-
-/* --- Thẻ Card (Sử dụng cho cả Admin & Seller) --- */
+/* ========== CARDS & CONTAINERS ========== */
 .card {
     -fx-background-color: white;
     -fx-background-radius: 15;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 8);
 }
 
-/* --- Tiêu đề Dashboard --- */
-.title {
-    -fx-font-size: 32px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1e293b;
-}
-
-.label {
-    -fx-font-weight: bold;
-    -fx-text-fill: #475569;
-}
-
-/* --- Input & Form (Dành cho Seller đăng sản phẩm) --- */
-.text-field, .password-field, .text-area, .choice-box {
+/* ========== INPUT FIELDS ========== */
+.text-field, .password-field, .text-area, .choice-box, .combo-box {
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-color: #cbd5e1;
@@ -114,13 +51,13 @@
     -fx-transition: all 0.3s;
 }
 
-.text-field:focused, .text-area:focused {
+.text-field:focused, .password-field:focused, .text-area:focused, .combo-box:focused {
     -fx-border-color: #3b82f6;
     -fx-border-width: 2;
     -fx-effect: dropshadow(three-pass-box, rgba(59,130,246,0.2), 10, 0, 0, 0);
 }
 
-/* --- Button Styles --- */
+/* ========== BUTTONS ========== */
 .button {
     -fx-background-radius: 10;
     -fx-padding: 12 25;
@@ -137,7 +74,127 @@
     -fx-background-color: #2563eb;
 }
 
-/* --- Bảng dữ liệu (Admin & Seller Table) --- */
+.primary:pressed {
+    -fx-background-color: #1d4ed8;
+}
+
+/* ========== ALERT STYLES ========== */
+.error {
+    -fx-text-fill: #ef4444;
+    -fx-font-size: 13px;
+    -fx-font-style: italic;
+}
+
+.badge {
+    -fx-padding: 6 15;
+    -fx-background-radius: 20;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-color: #e5e7eb;
+    -fx-text-fill: #1f2937;
+}
+
+/* ========== BUTTON VARIANTS ========== */
+.btn-danger {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #dc2626;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar-container {
+    -fx-background-color: linear-gradient(to bottom, #1e293b, #0f172a);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 30, 0, 0, 0);
+}
+
+.logo-icon-bg {
+    -fx-background-color: #3b82f6;
+    -fx-background-radius: 12;
+    -fx-pref-width: 45;
+    -fx-pref-height: 45;
+}
+
+.logo-icon {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: 900;
+}
+
+.logo-text {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-letter-spacing: 1px;
+}
+
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 16px;
+    -fx-padding: 15 25;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s;
+}
+
+.nav-item:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-text-fill: white;
+}
+
+.nav-item:selected {
+    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.4), 10, 0, 0, 4);
+}
+
+.sidebar-user-card {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 15;
+    -fx-max-width: 260;
+}
+
+.sidebar-user-name {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.sidebar-user-status {
+    -fx-text-fill: #10b981;
+    -fx-font-size: 11px;
+}
+
+.nav-logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #f87171;
+    -fx-border-color: rgba(248, 113, 113, 0.3);
+    -fx-border-radius: 10;
+    -fx-padding: 10 30;
+}
+
+.nav-logout-btn:hover {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content-area {
+    -fx-background-color: #f8fafc;
+}
+
+.header-greeting {
+    -fx-font-size: 32px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #1e293b;
+}
+
+/* ========== TABLE VIEWS ========== */
 .table-view {
     -fx-background-color: transparent;
     -fx-border-color: #e2e8f0;
@@ -161,7 +218,7 @@
 }
 
 .table-row-cell {
-    -fx-cell-size: 50px; /* Tăng độ cao hàng để bảng thoáng hơn */
+    -fx-cell-size: 50px;
     -fx-border-color: transparent transparent #f1f5f9 transparent;
 }
 
@@ -174,191 +231,63 @@
     -fx-text-fill: #3b82f6;
 }
 
-/* --- Trạng thái & Thông báo (Badge) --- */
-.badge {
-    -fx-padding: 6 15;
-    -fx-background-radius: 20;
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-}
-
-/* Màu đỏ cho nút Hủy của Admin */
-.btn-danger {
-    -fx-background-color: #ef4444;
-    -fx-text-fill: white;
-}
-
-.btn-danger:hover {
-    -fx-background-color: #dc2626;
-}
-
-.error {
-    -fx-text-fill: #ef4444;
-    -fx-font-style: italic;
-}
-
-/* --- ScrollPane (Dành cho Form dài bên Seller) --- */
+/* ========== SCROLL PANE ========== */
 .scroll-pane {
     -fx-background-color: transparent;
 }
+
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
 
-/* Sidebar hiện đại với dải Gradient đứng */
-.sidebar-container {
-    -fx-background-color: linear-gradient(to bottom, #1e293b, #0f172a);
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 30, 0, 0, 0);
-}
-
-/* Logo icon phong cách App hiện đại */
-.logo-icon-bg {
-    -fx-background-color: #3b82f6;
-    -fx-background-radius: 12;
-    -fx-pref-width: 45;
-    -fx-pref-height: 45;
-}
-
-.logo-icon {
-    -fx-text-fill: white;
-    -fx-font-size: 24px;
-    -fx-font-weight: 900;
-}
-
-.logo-text {
-    -fx-font-size: 26px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-    -fx-letter-spacing: 1px;
-}
-
-/* Sidebar Item (Dùng ToggleButton để giữ trạng thái chọn) */
-.nav-item {
-    -fx-background-color: transparent;
-    -fx-text-fill: #94a3b8;
-    -fx-alignment: CENTER_LEFT;
-    -fx-font-size: 16px;
-    -fx-padding: 15 25;
-    -fx-background-radius: 12;
-    -fx-cursor: hand;
-    -fx-transition: all 0.3s;
-}
-
-.nav-item:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.08);
-    -fx-text-fill: white;
-}
-
-.nav-item:selected {
-    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.4), 10, 0, 0, 4);
-}
-
-/* User Card ở cuối Sidebar */
-.sidebar-user-card {
-    -fx-background-color: rgba(255, 255, 255, 0.05);
-    -fx-background-radius: 15;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-border-radius: 15;
-    -fx-max-width: 260;
-}
-
-.sidebar-user-name {
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-}
-
-.sidebar-user-status {
-    -fx-text-fill: #10b981; /* Màu xanh lá online */
-    -fx-font-size: 11px;
-}
-
-/* Nội dung chính */
-.main-content-area {
-    -fx-background-color: #f8fafc;
-}
-
-.header-greeting {
-    -fx-font-size: 32px;
-    -fx-font-weight: 900;
-    -fx-text-fill: #1e293b;
-}
-
-/* Nút đăng xuất chuyên nghiệp */
-.nav-logout-btn {
-    -fx-background-color: transparent;
-    -fx-text-fill: #f87171;
-    -fx-border-color: rgba(248, 113, 113, 0.3);
-    -fx-border-radius: 10;
-    -fx-padding: 10 30;
-}
-
-.nav-logout-btn:hover {
-    -fx-background-color: #ef4444;
-    -fx-text-fill: white;
-}
-
-/* Card Title */
-.card-title {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #334155;
-}
-
-/* Trang trí tổng thể ComboBox */
+/* ========== COMBO BOX ========== */
 .combo-box {
     -fx-background-color: white;
     -fx-background-radius: 8;
-    -fx-border-color: #ced4da; /* Màu viền giống TextField */
+    -fx-border-color: #cbd5e1;
     -fx-border-radius: 8;
     -fx-padding: 2 5 2 5;
     -fx-font-size: 14px;
     -fx-cursor: hand;
 }
 
-/* Khi di chuột qua ComboBox */
 .combo-box:hover {
     -fx-border-color: #80bdff;
 }
 
-/* Khi ComboBox được chọn (Focus) */
 .combo-box:focused {
     -fx-border-color: #007bff;
     -fx-background-color: white;
 }
 
-/* Chỉnh phần chữ hiển thị bên trong */
 .combo-box .list-cell {
     -fx-background-color: transparent;
     -fx-text-fill: #495057;
     -fx-padding: 5 10 5 10;
 }
 
-/* Trang trí cái nút mũi tên bên phải */
 .combo-box .arrow-button {
     -fx-background-color: transparent;
 }
 
 .combo-box .arrow {
-    -fx-background-color: #6c757d; /* Màu mũi tên */
+    -fx-background-color: #6c757d;
 }
 
-/* Trang trí danh sách sổ xuống (Popup) */
 .combo-box-popup .list-view {
     -fx-background-color: white;
     -fx-background-radius: 8;
-    -fx-border-color: #ced4da;
+    -fx-border-color: #cbd5e1;
     -fx-border-radius: 8;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
 }
 
-/* Chỉnh màu khi di chuột qua các mục trong danh sách sổ xuống */
 .combo-box-popup .list-cell:hover {
     -fx-background-color: #e9ecef;
     -fx-text-fill: #007bff;
 }
 
+/* ========== ICONS ========== */
 .icon-btn {
     -fx-background-color: transparent;
     -fx-cursor: hand;
@@ -370,10 +299,27 @@
 
 .back-icon {
     -fx-icon-size: 32px;
-    -fx-icon-color: #2196F3; /* Bạn cũng có thể đổi màu tại đây */
+    -fx-icon-color: #2196F3;
 }
 
-/* Hiệu ứng phóng to nhẹ khi di chuột vào nút */
 .icon-btn:hover .back-icon {
     -fx-icon-size: 35px;
+}
+
+.standalone-icon {
+    -fx-icon-color: #000000;
+    -fx-icon-size: 28px;
+    -fx-cursor: hand;
+    -fx-padding: 10;
+}
+
+.standalone-icon:pressed {
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+    -fx-opacity: 0.7;
+}
+
+/* ========== SEPARATOR ========== */
+.sidebar-separator {
+    -fx-text-fill: rgba(255, 255, 255, 0.1);
 }

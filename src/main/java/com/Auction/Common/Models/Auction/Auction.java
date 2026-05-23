@@ -187,4 +187,26 @@ public class Auction extends Entity {
             lock().unlock();
         }
     }
+
+    /**
+     * Hủy phiên đấu giá
+     */
+    public void cancelAuction() {
+        lock().lock();
+        try {
+            if (status != AuctionStatus.FINISHED) {
+                status = AuctionStatus.CANCELED;
+                winnerId = null;
+            }
+        } finally {
+            lock().unlock();
+        }
+    }
+
+    /**
+     * Kiểm tra phiên đấu giá còn hợp lệ không
+     */
+    public boolean isValid() {
+        return status != AuctionStatus.CANCELED && !Instant.now().isAfter(endTime);
+    }
 }

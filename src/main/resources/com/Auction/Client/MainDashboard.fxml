@@ -4,13 +4,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Circle?>
 
-<StackPane prefHeight="800.0" prefWidth="1200.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.MainController">
+<StackPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.MainController">
     <BorderPane maxHeight="Infinity" maxWidth="Infinity">
         <!-- Sidebar -->
         <left>
             <VBox prefWidth="280" styleClass="sidebar-container">
                 <padding>
-                    <Insets top="40" bottom="30" />
+                    <Insets top="40" bottom="40" left="0" right="0" />
                 </padding>
 
                 <!-- Logo Area -->
@@ -65,9 +65,9 @@
         </left>
 
         <center>
-            <VBox spacing="25" styleClass="main-content-area">
+            <VBox spacing="25" styleClass="main-content-area" VBox.vgrow="ALWAYS">
                 <padding>
-                    <Insets top="30" left="35" right="35" bottom="30" />
+                    <Insets top="40" left="40" right="40" bottom="40" />
                 </padding>
 
                 <!-- Welcome Header -->
@@ -92,7 +92,7 @@
                         <TextField prefWidth="250" promptText="Tìm nhanh..." styleClass="search-box" />
                     </HBox>
 
-                    <!-- Sửa TableView với tỷ lệ phần trăm cho các cột -->
+                    <!-- TableView với tỷ lệ phần trăm cho các cột -->
                     <TableView fx:id="latestAuctionsTable" VBox.vgrow="ALWAYS">
                         <columns>
                             <TableColumn fx:id="nameCol" text="Sản phẩm" />
