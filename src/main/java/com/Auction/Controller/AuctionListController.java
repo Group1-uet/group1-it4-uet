@@ -1,7 +1,7 @@
 package com.Auction.Client.Controller;
 
 import com.Auction.Common.Models.Auction.Auction;
-import com.Auction.Common.Services.AuctionService;
+import com.Auction.Common.Service.AuctionService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;

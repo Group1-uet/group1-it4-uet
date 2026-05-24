@@ -1,47 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.LoginController">
+<StackPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Auction.Client.Controller.RegisterController">
 
-    <VBox alignment="CENTER" maxHeight="450" maxWidth="400" spacing="25" styleClass="card">
-
+    <VBox alignment="CENTER" maxHeight="620" maxWidth="450" spacing="25" styleClass="card">
         <padding>
-            <Insets bottom="40" left="50" right="50" top="40" />
+            <Insets bottom="40" left="50" right="50" top="40"/>
         </padding>
 
+        <!-- HEADER -->
         <VBox alignment="CENTER" spacing="8">
-            <Label styleClass="title" text="Sign in" />
+            <Label styleClass="title" text="Đăng ký tài khoản"/>
+            <Label styleClass="subtitle" text="Chọn vai trò và tạo tài khoản mới"/>
         </VBox>
 
+        <!-- INPUT FIELDS -->
         <VBox spacing="15">
             <VBox spacing="5">
-                <Label text="Username" />
-                <TextField fx:id="usernameField" promptText="e.g. bob" />
+                <Label text="Tên đăng nhập"/>
+                <TextField fx:id="usernameField" promptText="Chọn tên đăng nhập..."/>
             </VBox>
 
             <VBox spacing="5">
-                <Label text="Password" />
-                <PasswordField fx:id="passwordField" promptText="••••••••" />
+                <Label text="Mật khẩu"/>
+                <PasswordField fx:id="passwordField" promptText="Tối thiểu 3 ký tự"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Xác nhận mật khẩu"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="Nhập lại mật khẩu"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Chọn vai trò"/>
+                <ComboBox fx:id="roleComboBox" maxWidth="Infinity" promptText="Chọn vai trò của bạn..."/>
             </VBox>
         </VBox>
 
+        <!-- ERROR MESSAGE -->
+        <Label fx:id="errorLabel" styleClass="error" text="" wrapText="true"/>
+
+        <!-- REGISTER BUTTON -->
         <VBox alignment="CENTER" spacing="15">
-            <Button fx:id="loginButton" defaultButton="true" maxWidth="Infinity" styleClass="primary" text="Login" />
+            <Button fx:id="registerButton" onAction="#onRegister" maxWidth="Infinity" styleClass="primary" text="Đăng ký"/>
 
             <HBox alignment="CENTER" spacing="5">
-                <Label styleClass="muted" text="Don't have an account?" />
-                <Hyperlink fx:id="registerLink" text="Register" onAction="#goToRegister"/>
+                <Label styleClass="muted" text="Đã có tài khoản?"/>
+                <Hyperlink onAction="#goToLogin" text="Đăng nhập"/>
             </HBox>
         </VBox>
-
     </VBox>
 </StackPane>

@@ -1,46 +1,56 @@
 package com.Auction.Common.Models.Item;
 
 import java.util.Map;
-import java.util.Objects;
+import java.sql.Timestamp;
 
 public class ItemFactory {
-    public static Item create(String category, String name, String description,
-                              String sellerId, Map<String, String> props) {
 
-        Objects.requireNonNull(category, "category");
-        Map<String, String> p = props == null ? Map.of() : props;
+    public static Item createItem(String category, Map<String, Object> commonData, Map<String, Object> specificData) {
+        int id = (int) commonData.getOrDefault("id", 0);
+        String name = (String) commonData.getOrDefault("name", "");
+        String desc = (String) commonData.getOrDefault("description", "");
+        double start = (double) commonData.getOrDefault("startPrice", 0.0);
+        double bin = (double) commonData.getOrDefault("binPrice", 0.0);
 
-        return switch (category.trim().toLowerCase()) {
-            case "electronics" -> new Electronics(
-                    name, description, sellerId,
-                    p.getOrDefault("brand", ""),
-                    parseInt(p.get("warrantyMonths"), 0));
-            case "art" -> new Art(
-                    name, description, sellerId,
-                    p.getOrDefault("artist", ""),
-                    parseInt(p.get("year"), 0));
-            case "vehicle" -> new Vehicle(
-                    name, description, sellerId,
-                    p.getOrDefault("make", ""),
-                    p.getOrDefault("model", ""),
-                    parseInt(p.get("year"), 0));
-            default -> throw new IllegalArgumentException("Unknown item category: " + category);
-        };
-    }
+        // Bóc tách cả currentPrice và winPrice
+        double currentPrice = (double) commonData.getOrDefault("currentPrice", 0.0);
+        double winPrice = (double) commonData.getOrDefault("winPrice", 0.0);
 
-    public static String[] supportedCategories() {
-        return new String[] {"Electronics", "Art", "Vehicle"};
-    }
+        double step = (double) commonData.getOrDefault("step", 0.0);
+        String sellerName = (String) commonData.getOrDefault("sellerName", "Unknown");
+        Timestamp endTime = (Timestamp) commonData.get("endTime");
+        String status = (String) commonData.getOrDefault("status", "OPEN");
+        String paymentStatus = (String) commonData.getOrDefault("paymentStatus", "PENDING");
 
-    private static int parseInt(String s, int fallback) {
-        if (s == null || s.isBlank())
-            return fallback;
-        try {
-            return Integer.parseInt(s.trim());
-        }
-        catch (NumberFormatException e) {
-            return fallback;
+        if (category == null) category = "OTHER";
+
+        switch (category.toUpperCase()) {
+            case "ART":
+                return new Art(id, name, desc, start, bin, currentPrice, step, sellerName, endTime, status, paymentStatus,
+                        (String) specificData.getOrDefault("artist", ""),
+                        (String) specificData.getOrDefault("medium", ""),
+                        (String) specificData.getOrDefault("state", ""),
+                        winPrice); // winPrice ở cuối
+
+            case "ELECTRONICS":
+                return new Electronics(id, name, desc, start, winPrice, bin, currentPrice, step, sellerName, endTime, status, paymentStatus,
+                        (String) specificData.getOrDefault("brand", ""),
+                        (String) specificData.getOrDefault("warranty", ""),
+                        (String) specificData.getOrDefault("state", ""));
+
+            case "VEHICLE":
+                return new Vehicle(id, name, desc, start, bin, currentPrice, step, sellerName, endTime, status, paymentStatus,
+                        (String) specificData.getOrDefault("brand", ""),
+                        (int) specificData.getOrDefault("modelYear", 0),
+                        (String) specificData.getOrDefault("engineType", ""),
+                        (String) specificData.getOrDefault("state", ""),
+                        (int) specificData.getOrDefault("age", 0),
+                        (double) specificData.getOrDefault("mileage", 0.0),
+                        winPrice); // winPrice ở cuối
+
+            case "OTHER":
+            default:
+                return new Other(id, name, desc, start, bin, currentPrice, step, sellerName, endTime, status, paymentStatus, winPrice);
         }
     }
 }
-

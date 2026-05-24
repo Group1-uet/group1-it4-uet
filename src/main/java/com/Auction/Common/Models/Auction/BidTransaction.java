@@ -1,7 +1,5 @@
 package com.Auction.Common.Models.Auction;
 
-import com.Auction.Common.Models.Entity;
-
 import java.time.Instant;
 import java.util.Objects;
 
