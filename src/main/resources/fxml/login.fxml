@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="auction.client.LoginController"
+      alignment="CENTER" spacing="20" style="-fx-background-color: #1a1a2e;">
+    <padding>
+        <Insets top="50" right="60" bottom="50" left="60"/>
+    </padding>
+
+    <Label text="🏆 Hệ thống Đấu giá Trực tuyến"
+           style="-fx-text-fill: #e94560; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+    <Label text="Nhập tên người dùng để tham gia"
+           style="-fx-text-fill: #a8a8b3; -fx-font-size: 13px;"/>
+
+    <TextField fx:id="usernameField" promptText="Tên người dùng (VD: bidder01)"
+               maxWidth="300"
+               style="-fx-background-color: #16213e; -fx-text-fill: white;
+                      -fx-border-color: #e94560; -fx-border-radius: 5;
+                      -fx-background-radius: 5; -fx-padding: 10; -fx-font-size: 14px;"/>
+
+    <Button fx:id="loginButton" text="🚀 Kết nối và Đăng nhập"
+            onAction="#handleLogin"
+            maxWidth="300"
+            style="-fx-background-color: #e94560; -fx-text-fill: white;
+                   -fx-font-size: 14px; -fx-font-weight: bold;
+                   -fx-padding: 12 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
+
+    <Label fx:id="statusLabel" text=""
+           style="-fx-text-fill: #f5c518; -fx-font-size: 12px;"/>
+</VBox>

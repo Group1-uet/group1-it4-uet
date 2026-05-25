@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="auction.client.AuctionListController"
+      spacing="10" style="-fx-background-color: #1a1a2e;">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Label text="🏆 Danh sách Phiên Đấu giá"
+               style="-fx-text-fill: #e94560; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <Button text="🔄 Làm mới" onAction="#handleRefresh"
+                style="-fx-background-color: #16213e; -fx-text-fill: #a8a8b3;
+                       -fx-border-color: #e94560; -fx-border-radius: 5;
+                       -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15;"/>
+        <Button text="🚀 Tham gia Đấu giá" onAction="#handleJoinAuction"
+                style="-fx-background-color: #e94560; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-background-radius: 5;
+                       -fx-cursor: hand; -fx-padding: 8 15;"/>
+    </HBox>
+
+    <!-- Table -->
+    <TableView fx:id="auctionTable" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: #16213e; -fx-border-color: #0f3460; -fx-border-radius: 5;">
+        <columns>
+            <TableColumn fx:id="colId" text="ID Phiên" prefWidth="140"
+                         style="-fx-text-fill: white; -fx-alignment: CENTER;"/>
+            <TableColumn fx:id="colItemId" text="Sản phẩm" prefWidth="200"/>
+            <TableColumn fx:id="colCurrentBid" text="Giá hiện tại (₫)" prefWidth="160"/>
+            <TableColumn fx:id="colStatus" text="Trạng thái" prefWidth="130"/>
+            <TableColumn fx:id="colEndTime" text="Kết thúc lúc" prefWidth="200"/>
+        </columns>
+        <placeholder>
+            <Label text="Không có phiên đấu giá nào đang mở."
+                   style="-fx-text-fill: #a8a8b3; -fx-font-size: 14px;"/>
+        </placeholder>
+    </TableView>
+
+    <!-- Status Bar -->
+    <Label fx:id="statusLabel" text=""
+           style="-fx-text-fill: #a8a8b3; -fx-font-size: 12px;"/>
+</VBox>
