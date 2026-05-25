@@ -18,7 +18,7 @@ public class ClientNetwork {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private final Gson gson = new Gson();
+    private final Gson gson = auction.network.GsonHelper.getGson();
     private Consumer<Message> onMessageReceived;
     private Thread listenerThread;
     private boolean running = false;

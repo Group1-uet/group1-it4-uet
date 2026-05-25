@@ -22,6 +22,10 @@ public class AutoBidManager {
     private AutoBidManager() {
     }
 
+    public synchronized void clear() {
+        autoBidMap.clear();
+    }
+
     public static synchronized AutoBidManager getInstance() {
         if (instance == null) {
             instance = new AutoBidManager();

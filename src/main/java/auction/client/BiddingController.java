@@ -16,6 +16,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import auction.network.GsonHelper;
+
 import java.lang.reflect.Type;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -62,7 +64,7 @@ public class BiddingController {
     private double currentPrice;
     private XYChart.Series<Number, Number> priceSeries;
     private ObservableList<BidTransaction> bidHistory = FXCollections.observableArrayList();
-    private final Gson gson = new Gson();
+    private final Gson gson = GsonHelper.getGson();
     
     private boolean isAutoBidActive = false;
 

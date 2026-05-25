@@ -35,7 +35,7 @@ public class ClientHandler implements Runnable {
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
-        this.gson = new Gson();
+        this.gson = auction.network.GsonHelper.getGson();
         this.userDAO = new UserDAO();
         this.itemDAO = new ItemDAO();
         this.auctionDAO = new AuctionDAO();

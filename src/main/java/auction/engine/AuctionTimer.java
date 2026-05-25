@@ -4,6 +4,7 @@ import auction.dao.AuctionDAO;
 import auction.model.Auction;
 import auction.network.Message;
 import auction.network.MessageType;
+import auction.network.GsonHelper;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -90,11 +91,12 @@ public class AuctionTimer {
         if (changed) {
             // Broadcast updated auctions list to all clients
             Message listUpdate = new Message(MessageType.GET_AUCTIONS_RESPONSE);
-            listUpdate.put("auctions", new com.google.gson.Gson().toJson(dao.getAllAuctions()));
+            listUpdate.put("auctions", GsonHelper.getGson().toJson(dao.getAllAuctions()));
             NotificationManager.getInstance().broadcast(listUpdate);
         }
         } catch (Exception e) {
             System.err.println("[AuctionTimer] Error in checkExpiredAuctions: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

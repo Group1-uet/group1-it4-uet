@@ -27,7 +27,7 @@ public class AuctionListController {
     @FXML private Label statusLabel;
 
     private ObservableList<Auction> auctionData = FXCollections.observableArrayList();
-    private final Gson gson = new Gson();
+    private final Gson gson = auction.network.GsonHelper.getGson();
 
     @FXML
     public void initialize() {

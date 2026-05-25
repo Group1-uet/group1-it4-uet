@@ -7,10 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnection {
-    private static final String URL = "jdbc:sqlite:auction_db.sqlite";
+    private static String url = "jdbc:sqlite:auction_db.sqlite";
+
+    public static void setUrl(String newUrl) {
+        url = newUrl;
+    }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL);
+        return DriverManager.getConnection(url);
     }
 
     public static void initializeDatabase() {
