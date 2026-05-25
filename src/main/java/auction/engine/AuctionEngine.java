@@ -93,9 +93,10 @@ public class AuctionEngine {
         NotificationManager.getInstance().broadcast(newBidMsg);
 
         // 5. Kích hoạt Auto-Bid cho các người dùng đã đăng ký
-        // Chỉ kích hoạt nếu có người đăng ký auto-bid, tránh đệ quy vô hạn
-        // AutoBidManager sẽ tự gọi placeBid() nếu tìm được người đủ điều kiện
-        AutoBidManager.getInstance().triggerAutoBids(auctionId, amount, bidderId);
+        // Chạy bất đồng bộ (Asynchronous) để bẻ gãy đệ quy và tránh StackOverflowError
+        java.util.concurrent.CompletableFuture.runAsync(() -> {
+            AutoBidManager.getInstance().triggerAutoBids(auctionId);
+        });
 
         return true;
     }

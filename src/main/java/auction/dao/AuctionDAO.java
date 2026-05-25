@@ -19,8 +19,8 @@ public class AuctionDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, auction.getAuctionId());
             pstmt.setString(2, auction.getItemId());
-            pstmt.setObject(3, auction.getStartTime());
-            pstmt.setObject(4, auction.getEndTime());
+            pstmt.setString(3, auction.getStartTime().toString());
+            pstmt.setString(4, auction.getEndTime().toString());
             pstmt.setDouble(5, auction.getCurrentHighestBid());
             pstmt.setString(6, auction.getStatus());
             pstmt.executeUpdate();
@@ -30,7 +30,12 @@ public class AuctionDAO {
     }
 
     public Auction getAuctionById(String id) {
-        String sql = "SELECT * FROM auctions WHERE id = ?";
+        String sql = "SELECT a.*, i.seller_id, i.name AS item_name, i.description AS item_description, " +
+                     "i.starting_price, " +
+                     "(SELECT COUNT(*) FROM bids WHERE auction_id = a.id) AS bid_count, " +
+                     "(SELECT bidder_id FROM bids WHERE auction_id = a.id ORDER BY amount DESC LIMIT 1) AS highest_bidder " +
+                     "FROM auctions a JOIN items i ON a.item_id = i.id " +
+                     "WHERE a.id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, id);
@@ -46,7 +51,11 @@ public class AuctionDAO {
 
     public List<Auction> getAllAuctions() {
         List<Auction> auctions = new ArrayList<>();
-        String sql = "SELECT * FROM auctions";
+        String sql = "SELECT a.*, i.seller_id, i.name AS item_name, i.description AS item_description, " +
+                     "i.starting_price, " +
+                     "(SELECT COUNT(*) FROM bids WHERE auction_id = a.id) AS bid_count, " +
+                     "(SELECT bidder_id FROM bids WHERE auction_id = a.id ORDER BY amount DESC LIMIT 1) AS highest_bidder " +
+                     "FROM auctions a JOIN items i ON a.item_id = i.id";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -63,8 +72,8 @@ public class AuctionDAO {
         String sql = "UPDATE auctions SET start_time = ?, end_time = ?, current_price = ?, status = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setObject(1, auction.getStartTime());
-            pstmt.setObject(2, auction.getEndTime());
+            pstmt.setString(1, auction.getStartTime().toString());
+            pstmt.setString(2, auction.getEndTime().toString());
             pstmt.setDouble(3, auction.getCurrentHighestBid());
             pstmt.setString(4, auction.getStatus());
             pstmt.setString(5, auction.getAuctionId());
@@ -88,16 +97,29 @@ public class AuctionDAO {
     private Auction mapResultSetToAuction(ResultSet rs) throws SQLException {
         String id = rs.getString("id");
         String itemId = rs.getString("item_id");
-        LocalDateTime startTime = rs.getObject("start_time", LocalDateTime.class);
-        LocalDateTime endTime = rs.getObject("end_time", LocalDateTime.class);
+        String startTimeStr = rs.getString("start_time");
+        String endTimeStr = rs.getString("end_time");
+        LocalDateTime startTime = startTimeStr != null ? LocalDateTime.parse(startTimeStr) : null;
+        LocalDateTime endTime = endTimeStr != null ? LocalDateTime.parse(endTimeStr) : null;
         double currentPrice = rs.getDouble("current_price");
         String status = rs.getString("status");
+        String sellerId = rs.getString("seller_id");
+        String itemName = rs.getString("item_name");
+        String itemDescription = rs.getString("item_description");
+        int bidCount = rs.getInt("bid_count");
+        String highestBidder = rs.getString("highest_bidder");
 
-        // We need sellerId to create Auction, but it's not in the auctions table directly.
-        // We'll pass a placeholder or we would need a JOIN. For now, passing empty string.
-        Auction auction = new Auction(id, itemId, "", startTime, endTime);
+        Auction auction = new Auction(id, itemId, sellerId, startTime, endTime);
         auction.setCurrentHighestBid(currentPrice);
+        // starting_price comes from items table via JOIN
+        try { auction.setStartingPrice(rs.getDouble("starting_price")); } catch (SQLException ignored) {
+            auction.setStartingPrice(currentPrice); // fallback
+        }
         auction.setStatus(status);
+        auction.setItemName(itemName);
+        auction.setItemDescription(itemDescription);
+        auction.setBidCount(bidCount);
+        auction.setCurrentHighestBidder(highestBidder);
         return auction;
     }
 }

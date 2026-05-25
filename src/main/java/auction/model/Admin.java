@@ -12,6 +12,10 @@ public class Admin extends User {
         this.adminLevel = adminLevel;
     }
 
+    public Admin(String id, String username, String password, String email) {
+        this(id, username, password, email, "General", "SUPPORT");
+    }
+
     public String getDepartment() {
         return department;
     }

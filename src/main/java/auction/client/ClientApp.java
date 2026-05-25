@@ -21,23 +21,37 @@ public class ClientApp extends Application {
 
     public static void switchToLogin() throws Exception {
         Parent root = FXMLLoader.load(ClientApp.class.getResource("/fxml/login.fxml"));
-        primaryStage.setScene(new Scene(root, 480, 360));
+        primaryStage.setScene(new Scene(root, 520, 480));
         primaryStage.setResizable(false);
     }
 
     public static void switchToAuctionList() throws Exception {
         FXMLLoader loader = new FXMLLoader(ClientApp.class.getResource("/fxml/auctionList.fxml"));
         Parent root = loader.load();
-        primaryStage.setScene(new Scene(root, 860, 600));
+        primaryStage.setScene(new Scene(root, 960, 680));
         primaryStage.setResizable(true);
     }
 
-    public static void switchToBidding(String auctionId, String auctionTitle, double currentPrice) throws Exception {
+    public static void switchToBidding(auction.model.Auction auction) throws Exception {
         FXMLLoader loader = new FXMLLoader(ClientApp.class.getResource("/fxml/bidding.fxml"));
         Parent root = loader.load();
         BiddingController controller = loader.getController();
-        controller.initData(auctionId, auctionTitle, currentPrice);
-        primaryStage.setScene(new Scene(root, 860, 600));
+        controller.initData(auction);
+        primaryStage.setScene(new Scene(root, 960, 680));
+    }
+
+    public static void switchToSeller() throws Exception {
+        FXMLLoader loader = new FXMLLoader(ClientApp.class.getResource("/fxml/seller.fxml"));
+        Parent root = loader.load();
+        primaryStage.setScene(new Scene(root, 960, 680));
+        primaryStage.setResizable(true);
+    }
+
+    public static void switchToAdmin() throws Exception {
+        FXMLLoader loader = new FXMLLoader(ClientApp.class.getResource("/fxml/admin.fxml"));
+        Parent root = loader.load();
+        primaryStage.setScene(new Scene(root, 960, 680));
+        primaryStage.setResizable(true);
     }
 
     public static ClientNetwork getNetwork() {

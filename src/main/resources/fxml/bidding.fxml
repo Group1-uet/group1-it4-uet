@@ -19,13 +19,16 @@
                        -fx-background-radius: 4; -fx-cursor: hand; -fx-padding: 5 12;"/>
         <Label fx:id="labelAuctionTitle"
                style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="labelTimer" text="Thời gian còn lại: --:--" 
+               style="-fx-text-fill: #f5c518; -fx-font-size: 14px; -fx-font-weight: bold;"/>
     </HBox>
 
     <!-- Main Content -->
     <HBox spacing="15" VBox.vgrow="ALWAYS">
 
         <!-- Left Panel: Bidding Controls -->
-        <VBox spacing="14" minWidth="280" maxWidth="300"
+        <VBox spacing="10" minWidth="280" maxWidth="300"
               style="-fx-background-color: #16213e; -fx-background-radius: 8; -fx-padding: 20;">
 
             <Label text="Giá cao nhất hiện tại"
@@ -38,38 +41,41 @@
 
             <Separator style="-fx-background-color: #0f3460;"/>
 
-            <Label text="Nhập giá của bạn (₫)"
-                   style="-fx-text-fill: #a8a8b3; -fx-font-size: 12px;"/>
+            <!-- Manual Bid -->
+            <Label text="Đặt giá thủ công (₫)" style="-fx-text-fill: #a8a8b3; -fx-font-size: 12px;"/>
             <TextField fx:id="bidAmountField" promptText="VD: 1500000"
                        style="-fx-background-color: #1a1a2e; -fx-text-fill: white;
                               -fx-border-color: #0f3460; -fx-border-radius: 5;
-                              -fx-background-radius: 5; -fx-padding: 10; -fx-font-size: 15px;"/>
+                              -fx-background-radius: 5; -fx-padding: 8;"/>
+            <Button fx:id="placeBidButton" text="⚡ ĐẶT GIÁ" onAction="#handlePlaceBid"
+                    maxWidth="Infinity" style="-fx-background-color: #e94560; -fx-text-fill: white;"/>
 
-            <Button fx:id="placeBidButton" text="⚡ ĐẶT GIÁ NGAY"
-                    onAction="#handlePlaceBid"
-                    maxWidth="Infinity"
-                    style="-fx-background-color: #e94560; -fx-text-fill: white;
-                           -fx-font-size: 15px; -fx-font-weight: bold;
-                           -fx-padding: 12; -fx-background-radius: 5; -fx-cursor: hand;"/>
+            <!-- Auto-Bid Panel -->
+            <TitledPane text="Tự động đặt giá (Auto-Bid)" expanded="false" 
+                        style="-fx-background-color: #1a1a2e;">
+                <VBox spacing="8">
+                    <TextField fx:id="tfMaxBid" promptText="Giá tối đa"/>
+                    <TextField fx:id="tfIncrement" promptText="Bước giá"/>
+                    <Button fx:id="btnToggleAutoBid" text="KÍCH HOẠT AUTO" onAction="#handleToggleAutoBid"
+                            maxWidth="Infinity" style="-fx-background-color: #0f3460; -fx-text-fill: white;"/>
+                    <Label fx:id="labelAutoBidStatus" text="Trạng thái: Tắt" style="-fx-text-fill: #a8a8b3; -fx-font-size: 10px;"/>
+                </VBox>
+            </TitledPane>
 
             <!-- Bid History -->
-            <Label text="Lịch sử đặt giá"
-                   style="-fx-text-fill: #a8a8b3; -fx-font-size: 12px;"/>
+            <Label text="Lịch sử đặt giá" style="-fx-text-fill: #a8a8b3; -fx-font-size: 12px;"/>
             <TableView fx:id="bidHistoryTable" VBox.vgrow="ALWAYS"
                        style="-fx-background-color: #1a1a2e; -fx-border-color: #0f3460;">
                 <columns>
-                    <TableColumn fx:id="colBidder" text="Người đặt" prefWidth="100"/>
-                    <TableColumn fx:id="colAmount" text="Giá (₫)" prefWidth="100"/>
+                    <TableColumn fx:id="colBidder" text="Người đặt" prefWidth="90"/>
+                    <TableColumn fx:id="colAmount" text="Giá (₫)" prefWidth="90"/>
                     <TableColumn fx:id="colTime" text="Thời gian" prefWidth="80"/>
                 </columns>
-                <placeholder>
-                    <Label text="Chưa có lịch sử." style="-fx-text-fill: #a8a8b3;"/>
-                </placeholder>
             </TableView>
         </VBox>
 
         <!-- Right Panel: Price Chart -->
-        <VBox VBox.hgrow="ALWAYS" spacing="8">
+        <VBox HBox.hgrow="ALWAYS" spacing="8">
             <Label text="📈 Biểu đồ giá Realtime"
                    style="-fx-text-fill: #a8a8b3; -fx-font-size: 13px;"/>
             <LineChart fx:id="priceChart" VBox.vgrow="ALWAYS"

@@ -7,11 +7,14 @@ public class Auction {
     private String auctionId;
     private String itemId;
     private String sellerId;
+    private String itemName;
+    private String itemDescription;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private double startingPrice;       // Giá khởi điểm (không đổi)
     private double currentHighestBid;
     private String currentHighestBidder;
-    private String status; // PENDING, ACTIVE, CLOSED, CANCELLED
+    private String status; // OPEN, RUNNING, FINISHED, PAID, CANCELED, CLOSED
     private int bidCount;
 
     public Auction(String auctionId, String itemId, String sellerId, LocalDateTime startTime, LocalDateTime endTime) {
@@ -20,7 +23,7 @@ public class Auction {
         this.sellerId = sellerId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.status = "PENDING";
+        this.status = "OPEN";
         this.bidCount = 0;
         this.currentHighestBidder = null;
     }
@@ -49,6 +52,22 @@ public class Auction {
         this.sellerId = sellerId;
     }
 
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getItemDescription() {
+        return itemDescription;
+    }
+
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
+    }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }
@@ -63,6 +82,14 @@ public class Auction {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public double getStartingPrice() {
+        return startingPrice;
+    }
+
+    public void setStartingPrice(double startingPrice) {
+        this.startingPrice = startingPrice;
     }
 
     public double getCurrentHighestBid() {
@@ -89,8 +116,8 @@ public class Auction {
     }
 
     public void setStatus(String status) {
-        if (!status.matches("PENDING|ACTIVE|CLOSED|CANCELLED")) {
-            throw new IllegalArgumentException("Invalid auction status");
+        if (!status.matches("OPEN|RUNNING|FINISHED|PAID|CANCELED|CLOSED")) {
+            throw new IllegalArgumentException("Invalid auction status: " + status);
         }
         this.status = status;
     }
@@ -108,11 +135,11 @@ public class Auction {
     }
 
     public boolean isActive() {
-        return "ACTIVE".equals(status);
+        return "RUNNING".equals(status);
     }
 
     public boolean isClosed() {
-        return "CLOSED".equals(status);
+        return "FINISHED".equals(status) || "PAID".equals(status) || "CANCELED".equals(status);
     }
 
     public boolean isExpired() {

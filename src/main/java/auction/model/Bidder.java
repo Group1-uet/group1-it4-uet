@@ -14,6 +14,10 @@ public class Bidder extends User {
         this.failedBids = 0;
     }
 
+    public Bidder(String id, String username, String password, String email) {
+        this(id, username, password, email, 10000000.0);
+    }
+
     public double getAccountBalance() {
         return accountBalance;
     }

@@ -47,6 +47,9 @@ public class AuctionServer {
     }
 
     public static void main(String[] args) {
+        // Initialize SQLite database schema
+        auction.db.DatabaseConnection.initializeDatabase();
+
         AuctionServer server = new AuctionServer();
         server.startServer();
     }

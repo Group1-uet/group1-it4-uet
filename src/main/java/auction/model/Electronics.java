@@ -15,6 +15,10 @@ public class Electronics extends Item {
         this.model = model;
     }
 
+    public Electronics(String id, String name, String description, double startingPrice, String sellerId) {
+        this(id, name, description, startingPrice, 12, "Generic Brand", "Generic Model", sellerId);
+    }
+
     public int getWarrantyMonths() {
         return warrantyMonths;
     }

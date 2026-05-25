@@ -20,6 +20,10 @@ public class Art extends Item {
         this.isAuthenticated = isAuthenticated;
     }
 
+    public Art(String id, String name, String description, double startingPrice, String sellerId) {
+        this(id, name, description, startingPrice, "Unknown Artist", "PAINTING", 2026, "Canvas", true, sellerId);
+    }
+
     public String getArtist() {
         return artist;
     }

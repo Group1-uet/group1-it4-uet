@@ -70,14 +70,20 @@ public class AutoBidManager {
      * @param currentHighestBid    Giá cao nhất hiện tại
      * @param currentHighestBidder Người đang dẫn đầu
      */
-    public synchronized void triggerAutoBids(String auctionId,
-            double currentHighestBid,
-            String currentHighestBidder) {
+    public synchronized void triggerAutoBids(String auctionId) {
         PriorityQueue<AutoBidConfig> queue = autoBidMap.get(auctionId);
         if (queue == null || queue.isEmpty())
             return;
 
-        // Lấy danh sách eligible (còn tiền và không phải người đang dẫn đầu)
+        // Fetch latest auction details from DB
+        auction.model.Auction auctionObj = AuctionEngine.getInstance().getAuctionDAO().getAuctionById(auctionId);
+        if (auctionObj == null || !auctionObj.isActive() || auctionObj.isExpired())
+            return;
+
+        double currentHighestBid = auctionObj.getCurrentHighestBid();
+        String currentHighestBidder = auctionObj.getCurrentHighestBidder();
+
+        // Lấy danh sách eligible (không phải người đang dẫn đầu và maxBid > currentHighestBid)
         List<AutoBidConfig> eligible = queue.stream()
                 .filter(c -> !c.getBidderId().equals(currentHighestBidder))
                 .filter(c -> c.getMaxBid() > currentHighestBid)
@@ -85,20 +91,27 @@ public class AutoBidManager {
                 .collect(Collectors.toList());
 
         for (AutoBidConfig config : eligible) {
-            double nextBid = currentHighestBid + config.getIncrement();
-            if (nextBid > config.getMaxBid()) {
-                nextBid = config.getMaxBid(); // Không vượt quá maxBid
-            }
+            // Check balance of this auto-bidder
+            auction.dao.UserDAO userDAO = new auction.dao.UserDAO();
+            auction.model.User u = userDAO.getUserById(config.getBidderId());
+            if (u instanceof auction.model.Bidder) {
+                auction.model.Bidder bidder = (auction.model.Bidder) u;
+                double nextBid = currentHighestBid + config.getIncrement();
+                if (nextBid > config.getMaxBid()) {
+                    nextBid = config.getMaxBid(); // Không vượt quá maxBid
+                }
 
-            // Gọi AuctionEngine để đặt giá (đã synchronized bên trong)
-            boolean success = AuctionEngine.getInstance()
-                    .placeBid(auctionId, config.getBidderId(), nextBid);
+                if (!bidder.hasEnoughBalance(nextBid)) {
+                    System.out.println("[AutoBid] Bidder " + config.getBidderId() + " has insufficient balance for auto-bid. Skipping.");
+                    continue;
+                }
 
-            if (success) {
-                System.out.println("[AutoBid] Auto-bid placed by: " + config.getBidderId()
-                        + " | amount=" + nextBid);
-                // Chỉ cho phép 1 Auto-Bid thắng mỗi vòng (người đăng ký sớm nhất)
-                break;
+                // Gọi AuctionEngine để đặt giá (đã synchronized bên trong)
+                boolean success = AuctionEngine.getInstance().placeBid(auctionId, config.getBidderId(), nextBid);
+                if (success) {
+                    System.out.println("[AutoBid] Auto-bid placed by: " + config.getBidderId() + " | amount=" + nextBid);
+                    break;
+                }
             }
         }
     }

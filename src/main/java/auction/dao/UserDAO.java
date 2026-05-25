@@ -16,7 +16,7 @@ import java.util.List;
 public class UserDAO {
     
     public void createUser(User user) {
-        String sql = "INSERT INTO users (id, username, password, email, full_name, role) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (id, username, password, email, full_name, role, balance) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, user.getId());
@@ -25,6 +25,11 @@ public class UserDAO {
             pstmt.setString(4, user.getEmail());
             pstmt.setString(5, user.getUsername()); // Tạm dùng username làm full_name
             pstmt.setString(6, user.getRole().toUpperCase());
+            double balance = 0.0;
+            if (user instanceof Bidder) {
+                balance = ((Bidder) user).getAccountBalance();
+            }
+            pstmt.setDouble(7, balance);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,14 +82,19 @@ public class UserDAO {
     }
 
     public void updateUser(User user) {
-        String sql = "UPDATE users SET username = ?, password = ?, email = ?, role = ? WHERE id = ?";
+        String sql = "UPDATE users SET username = ?, password = ?, email = ?, role = ?, balance = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getEmail());
             pstmt.setString(4, user.getRole().toUpperCase());
-            pstmt.setString(5, user.getId());
+            double balance = 0.0;
+            if (user instanceof Bidder) {
+                balance = ((Bidder) user).getAccountBalance();
+            }
+            pstmt.setDouble(5, balance);
+            pstmt.setString(6, user.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,7 +121,8 @@ public class UserDAO {
         
         switch (role.toUpperCase()) {
             case "BIDDER":
-                return new Bidder(id, username, password, email);
+                double balance = rs.getDouble("balance");
+                return new Bidder(id, username, password, email, balance);
             case "SELLER":
                 return new Seller(id, username, password, email);
             case "ADMIN":

@@ -16,6 +16,10 @@ public class Seller extends User {
         this.accountSuspended = 0;
     }
 
+    public Seller(String id, String username, String password, String email) {
+        this(id, username, password, email, username + "'s Store");
+    }
+
     public String getStoreName() {
         return storeName;
     }

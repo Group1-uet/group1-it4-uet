@@ -22,6 +22,10 @@ public class Vehicle extends Item {
         this.mileage = mileage;
     }
 
+    public Vehicle(String id, String name, String description, double startingPrice, String sellerId) {
+        this(id, name, description, startingPrice, "CAR", "Generic Brand", "Generic Model", 2026, "Gasoline", 0, sellerId);
+    }
+
     public String getVehicleType() {
         return vehicleType;
     }
