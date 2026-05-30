@@ -12,8 +12,12 @@
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="15">
-        <Label text="🏆 Danh sách Phiên Đấu giá"
-               style="-fx-text-fill: #e94560; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <VBox spacing="5">
+            <Label text="🏆 Danh sách Phiên Đấu giá"
+                   style="-fx-text-fill: #e94560; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label fx:id="labelUserWelcome" text=""
+                   style="-fx-text-fill: #a8a8b3; -fx-font-size: 13px;"/>
+        </VBox>
         <HBox HBox.hgrow="ALWAYS"/>
         <Button text="🔄 Làm mới" onAction="#handleRefresh"
                 style="-fx-background-color: #16213e; -fx-text-fill: #a8a8b3;
@@ -23,6 +27,10 @@
                 style="-fx-background-color: #e94560; -fx-text-fill: white;
                        -fx-font-weight: bold; -fx-background-radius: 5;
                        -fx-cursor: hand; -fx-padding: 8 15;"/>
+        <Button text="🚪 Đăng xuất" onAction="#handleLogout"
+                style="-fx-background-color: transparent; -fx-text-fill: #e94560;
+                       -fx-border-color: #e94560; -fx-border-radius: 5;
+                       -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15;"/>
     </HBox>
 
     <!-- Table -->

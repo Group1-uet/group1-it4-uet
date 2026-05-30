@@ -79,6 +79,9 @@ public class ClientHandler implements Runnable {
                 case LOGIN_REQUEST:
                     handleLogin(request);
                     break;
+                case FORGOT_PASSWORD_REQUEST:
+                    handleForgotPassword(request);
+                    break;
                 case GET_AUCTIONS_REQUEST:
                     handleGetAuctions(request);
                     break;
@@ -171,6 +174,27 @@ public class ClientHandler implements Runnable {
             response.put("balance", "0");
         }
 
+        sendMessage(response);
+    }
+ 
+    private void handleForgotPassword(Message request) {
+        String username = request.get("username");
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+
+        Message response = new Message(MessageType.FORGOT_PASSWORD_RESPONSE);
+
+        User user = userDAO.getUserByUsername(username);
+        if (user == null || !email.equalsIgnoreCase(user.getEmail())) {
+            response.put("status", "FAILED");
+            response.put("reason", user == null ? "Tên người dùng không tồn tại!" : "Email khôi phục không khớp!");
+            sendMessage(response);
+            return;
+        }
+
+        user.setPassword(newPassword);
+        userDAO.updateUser(user);
+        response.put("status", "SUCCESS");
         sendMessage(response);
     }
 

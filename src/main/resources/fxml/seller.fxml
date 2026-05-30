@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="auction.client.AuctionListController"
+      alignment="CENTER" spacing="20" style="-fx-background-color: #1a1a2e;">
+    <padding>
+        <Insets top="50" right="50" bottom="50" left="50"/>
+    </padding>
+
+    <Label text="🏪 Kênh Người Bán (Seller Dashboard)"
+           style="-fx-text-fill: #e94560; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+           
+    <Label text="Tính năng quản lý sản phẩm và phiên đấu giá đang được phát triển..."
+           style="-fx-text-fill: #a8a8b3; -fx-font-size: 14px;"/>
+
+    <Button text="🚪 Đăng xuất tài khoản" onAction="#handleLogout"
+            style="-fx-background-color: #e94560; -fx-text-fill: white;
+                   -fx-font-size: 14px; -fx-font-weight: bold;
+                   -fx-padding: 10 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                   
+    <Label fx:id="statusLabel" visible="false"/>
+</VBox>

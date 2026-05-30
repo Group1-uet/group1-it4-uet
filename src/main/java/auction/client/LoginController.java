@@ -3,109 +3,199 @@ package auction.client;
 import auction.network.Message;
 import auction.network.MessageType;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 public class LoginController {
 
-    @FXML private Label titleLabel;
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
-    
-    // Fields for Registration
-    @FXML private VBox registerFieldsBox;
-    @FXML private TextField emailField;
-    @FXML private TextField fullNameField;
-    @FXML private ComboBox<String> roleComboBox;
+    // Tab buttons
+    @FXML private Button btnTabLogin;
+    @FXML private Button btnTabRegister;
+    @FXML private Button btnTabForgot;
 
-    @FXML private Button actionButton;
-    @FXML private Hyperlink toggleLink;
+    // Panels
+    @FXML private VBox loginPanel;
+    @FXML private VBox registerPanel;
+    @FXML private VBox forgotPanel;
+
+    // Login Fields
+    @FXML private TextField loginUsernameField;
+    @FXML private PasswordField loginPasswordField;
+    @FXML private Button loginButton;
+
+    // Register Fields
+    @FXML private TextField regUsernameField;
+    @FXML private PasswordField regPasswordField;
+    @FXML private TextField regEmailField;
+    @FXML private ComboBox<String> regRoleComboBox;
+    @FXML private Button registerButton;
+
+    // Forgot Password Fields
+    @FXML private TextField forgotUsernameField;
+    @FXML private TextField forgotEmailField;
+    @FXML private PasswordField forgotPasswordField;
+    @FXML private Button forgotButton;
+
+    // Feedback Status
     @FXML private Label statusLabel;
-
-    private boolean isLoginMode = true;
 
     @FXML
     public void initialize() {
         statusLabel.setText("");
-        roleComboBox.getItems().addAll("BIDDER", "SELLER", "ADMIN");
-        roleComboBox.setValue("BIDDER");
-        setMode(true);
+        regRoleComboBox.getItems().addAll("BIDDER", "SELLER", "ADMIN");
+        regRoleComboBox.setValue("BIDDER");
+        showLoginPanel(); // Default to Login view
+    }
+
+    // --- TAB SWITCHING LOGIC ---
+    
+    @FXML
+    private void showLoginPanel() {
+        loginPanel.setVisible(true);
+        loginPanel.setManaged(true);
+        registerPanel.setVisible(false);
+        registerPanel.setManaged(false);
+        forgotPanel.setVisible(false);
+        forgotPanel.setManaged(false);
+        statusLabel.setText("");
+
+        setTabActive(btnTabLogin);
+        setTabInactive(btnTabRegister);
+        setTabInactive(btnTabForgot);
     }
 
     @FXML
-    private void handleAction() {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
+    private void showRegisterPanel() {
+        loginPanel.setVisible(false);
+        loginPanel.setManaged(false);
+        registerPanel.setVisible(true);
+        registerPanel.setManaged(true);
+        forgotPanel.setVisible(false);
+        forgotPanel.setManaged(false);
+        statusLabel.setText("");
+
+        setTabInactive(btnTabLogin);
+        setTabActive(btnTabRegister);
+        setTabInactive(btnTabForgot);
+    }
+
+    @FXML
+    private void showForgotPanel() {
+        loginPanel.setVisible(false);
+        loginPanel.setManaged(false);
+        registerPanel.setVisible(false);
+        registerPanel.setManaged(false);
+        forgotPanel.setVisible(true);
+        forgotPanel.setManaged(true);
+        statusLabel.setText("");
+
+        setTabInactive(btnTabLogin);
+        setTabInactive(btnTabRegister);
+        setTabActive(btnTabForgot);
+    }
+
+    private void setTabActive(Button button) {
+        button.setStyle("-fx-background-color: #e94560; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
+    }
+
+    private void setTabInactive(Button button) {
+        button.setStyle("-fx-background-color: transparent; -fx-text-fill: #a8a8b3; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
+    }
+
+    // --- BUTTON EVENT HANDLERS ---
+
+    @FXML
+    private void handleLogin() {
+        String username = loginUsernameField.getText().trim();
+        String password = loginPasswordField.getText().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
-            statusLabel.setText("⚠️ Vui lòng nhập tài khoản và mật khẩu!");
+            statusLabel.setText("⚠️ Vui lòng nhập đầy đủ Tên đăng nhập và Mật khẩu!");
             return;
         }
 
-        actionButton.setDisable(true);
-        statusLabel.setText("Đang kết nối tới Server...");
+        loginButton.setDisable(true);
+        statusLabel.setText("⏳ Đang kết nối tới Server...");
 
-        // Connect first if not connected
         boolean connected = ClientApp.getNetwork().connect(this::onMessageReceived);
 
-        if (!connected) {
-            statusLabel.setText("❌ Không thể kết nối tới Server. Vui lòng thử lại.");
-            actionButton.setDisable(false);
-            return;
-        }
-
-        if (isLoginMode) {
-            // Send Login request
+        if (connected) {
             Message loginMsg = new Message(MessageType.LOGIN_REQUEST);
-            loginMsg.put("userId", username); // server expects userId for username
+            loginMsg.put("userId", username); // Server expects username under 'userId'
             loginMsg.put("password", password);
             ClientApp.getNetwork().sendMessage(loginMsg);
             statusLabel.setText("⏳ Đang xác thực...");
         } else {
-            // Send Register request
-            String email = emailField.getText().trim();
-            String fullName = fullNameField.getText().trim();
-            String role = roleComboBox.getValue();
-
-            if (email.isEmpty() || fullName.isEmpty()) {
-                statusLabel.setText("⚠️ Vui lòng điền đầy đủ thông tin đăng ký!");
-                actionButton.setDisable(false);
-                return;
-            }
-
-            Message registerMsg = new Message(MessageType.REGISTER_REQUEST);
-            registerMsg.put("username", username);
-            registerMsg.put("password", password);
-            registerMsg.put("email", email);
-            registerMsg.put("fullName", fullName);
-            registerMsg.put("role", role);
-            ClientApp.getNetwork().sendMessage(registerMsg);
-            statusLabel.setText("⏳ Đang gửi yêu cầu đăng ký...");
+            statusLabel.setText("❌ Không thể kết nối tới Server. Vui lòng thử lại.");
+            loginButton.setDisable(false);
         }
     }
 
     @FXML
-    private void handleToggleMode() {
-        setMode(!isLoginMode);
+    private void handleRegister() {
+        String username = regUsernameField.getText().trim();
+        String password = regPasswordField.getText().trim();
+        String email = regEmailField.getText().trim();
+        String role = regRoleComboBox.getValue();
+
+        if (username.isEmpty() || password.isEmpty() || email.isEmpty() || role == null) {
+            statusLabel.setText("⚠️ Vui lòng điền đầy đủ thông tin đăng ký!");
+            return;
+        }
+
+        registerButton.setDisable(true);
+        statusLabel.setText("⏳ Đang kết nối gửi yêu cầu đăng ký...");
+
+        boolean connected = ClientApp.getNetwork().connect(this::onMessageReceived);
+
+        if (connected) {
+            Message regMsg = new Message(MessageType.REGISTER_REQUEST);
+            regMsg.put("username", username);
+            regMsg.put("password", password);
+            regMsg.put("email", email);
+            regMsg.put("fullName", username); // Sử dụng username làm họ tên mặc định
+            regMsg.put("role", role);
+            ClientApp.getNetwork().sendMessage(regMsg);
+            statusLabel.setText("⏳ Đang gửi yêu cầu đăng ký...");
+        } else {
+            statusLabel.setText("❌ Không thể kết nối tới Server để đăng ký.");
+            registerButton.setDisable(false);
+        }
     }
 
-    private void setMode(boolean loginMode) {
-        this.isLoginMode = loginMode;
-        if (loginMode) {
-            titleLabel.setText("🔑 Đăng Nhập Hệ Thống");
-            registerFieldsBox.setVisible(false);
-            registerFieldsBox.setManaged(false);
-            actionButton.setText("🚀 Kết nối và Đăng nhập");
-            toggleLink.setText("Chưa có tài khoản? Đăng ký ngay");
-        } else {
-            titleLabel.setText("📝 Đăng Ký Tài Khoản");
-            registerFieldsBox.setVisible(true);
-            registerFieldsBox.setManaged(true);
-            actionButton.setText("✨ Đăng Ký Tài Khoản");
-            toggleLink.setText("Đã có tài khoản? Đăng nhập");
+    @FXML
+    private void handleForgotPassword() {
+        String username = forgotUsernameField.getText().trim();
+        String email = forgotEmailField.getText().trim();
+        String newPassword = forgotPasswordField.getText().trim();
+
+        if (username.isEmpty() || email.isEmpty() || newPassword.isEmpty()) {
+            statusLabel.setText("⚠️ Vui lòng điền đầy đủ thông tin khôi phục!");
+            return;
         }
-        statusLabel.setText("");
+
+        forgotButton.setDisable(true);
+        statusLabel.setText("⏳ Đang gửi yêu cầu khôi phục mật khẩu...");
+
+        boolean connected = ClientApp.getNetwork().connect(this::onMessageReceived);
+
+        if (connected) {
+            Message forgotMsg = new Message(MessageType.FORGOT_PASSWORD_REQUEST);
+            forgotMsg.put("username", username);
+            forgotMsg.put("email", email);
+            forgotMsg.put("newPassword", newPassword);
+            ClientApp.getNetwork().sendMessage(forgotMsg);
+        } else {
+            statusLabel.setText("❌ Không thể kết nối tới Server để khôi phục mật khẩu.");
+            forgotButton.setDisable(false);
+        }
     }
+
+    // --- INCOMING NETWORK MESSAGES ---
 
     private void onMessageReceived(Message msg) {
         if (msg.getType() == MessageType.LOGIN_RESPONSE) {
@@ -114,14 +204,14 @@ public class LoginController {
                 try {
                     statusLabel.setText("✅ Đăng nhập thành công!");
                     
-                    // Save Session info
+                    // Save Session info to client network
                     ClientNetwork net = ClientApp.getNetwork();
                     net.setCurrentUserId(msg.get("userId"));
                     net.setCurrentUsername(msg.get("username"));
                     net.setCurrentUserRole(msg.get("role"));
                     net.setCurrentUserBalance(Double.parseDouble(msg.get("balance")));
 
-                    // Scene switching based on user role
+                    // Route to role-specific dashboard
                     String role = net.getCurrentUserRole();
                     if ("SELLER".equalsIgnoreCase(role)) {
                         ClientApp.switchToSeller();
@@ -133,24 +223,39 @@ public class LoginController {
                 } catch (Exception e) {
                     statusLabel.setText("❌ Lỗi chuyển màn hình: " + e.getMessage());
                     e.printStackTrace();
-                    actionButton.setDisable(false);
+                    loginButton.setDisable(false);
                 }
             } else {
-                statusLabel.setText("❌ Đăng nhập thất bại: " + msg.get("reason"));
-                actionButton.setDisable(false);
+                statusLabel.setText("❌ " + msg.get("reason"));
+                loginButton.setDisable(false);
             }
         } else if (msg.getType() == MessageType.REGISTER_RESPONSE) {
+            registerButton.setDisable(false);
             String status = msg.get("status");
             if ("SUCCESS".equals(status)) {
-                statusLabel.setText("✅ Đăng ký thành công! Hãy đăng nhập.");
-                setMode(true); // Switch to login mode
+                statusLabel.setText("🎉 Đăng ký thành công! Hãy đăng nhập ngay.");
+                showLoginPanel();
+                loginUsernameField.setText(regUsernameField.getText().trim());
+                loginPasswordField.clear();
             } else {
                 statusLabel.setText("❌ Đăng ký thất bại: " + msg.get("reason"));
             }
-            actionButton.setDisable(false);
+        } else if (msg.getType() == MessageType.FORGOT_PASSWORD_RESPONSE) {
+            forgotButton.setDisable(false);
+            String status = msg.get("status");
+            if ("SUCCESS".equals(status)) {
+                statusLabel.setText("🎉 Đổi mật khẩu thành công! Hãy đăng nhập bằng mật khẩu mới.");
+                showLoginPanel();
+                loginUsernameField.setText(forgotUsernameField.getText().trim());
+                loginPasswordField.clear();
+            } else {
+                statusLabel.setText("❌ Khôi phục thất bại: " + msg.get("reason"));
+            }
         } else if (msg.getType() == MessageType.ERROR) {
             statusLabel.setText("❌ Lỗi: " + msg.get("reason"));
-            actionButton.setDisable(false);
+            loginButton.setDisable(false);
+            registerButton.setDisable(false);
+            forgotButton.setDisable(false);
         }
     }
 }
