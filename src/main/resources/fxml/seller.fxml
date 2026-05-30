@@ -1,25 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
- 
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="auction.client.AuctionListController"
-      alignment="CENTER" spacing="20" style="-fx-background-color: #1a1a2e;">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="auction.client.SellerController"
+      alignment="TOP_CENTER" spacing="15" style="-fx-background-color: #f0f4f8;">
     <padding>
-        <Insets top="50" right="50" bottom="50" left="50"/>
+        <Insets top="30" right="40" bottom="30" left="40"/>
     </padding>
 
-    <Label text="🏪 Kênh Người Bán (Seller Dashboard)"
-           style="-fx-text-fill: #e94560; -fx-font-size: 22px; -fx-font-weight: bold;"/>
-           
-    <Label text="Tính năng quản lý sản phẩm và phiên đấu giá đang được phát triển..."
-           style="-fx-text-fill: #a8a8b3; -fx-font-size: 14px;"/>
+    <!-- Header Section -->
+    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 0 0 10 0;">
+        <VBox spacing="5">
+            <Label text="🏪 Kênh Người Bán (Seller Dashboard)"
+                   style="-fx-text-fill: #0d47a1; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+            <Label fx:id="labelWelcome" text="👋 Xin chào, Seller"
+                   style="-fx-text-fill: #455a64; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="🚪 Đăng xuất" onAction="#handleLogout"
+                style="-fx-background-color: transparent; -fx-text-fill: #c62828;
+                       -fx-border-color: #ef9a9a; -fx-border-radius: 5;
+                       -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+    </HBox>
 
-    <Button text="🚪 Đăng xuất tài khoản" onAction="#handleLogout"
-            style="-fx-background-color: #e94560; -fx-text-fill: white;
-                   -fx-font-size: 14px; -fx-font-weight: bold;
-                   -fx-padding: 10 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
-                   
-    <Label fx:id="statusLabel" visible="false"/>
+    <Separator style="-fx-background-color: #bbdefb;"/>
+
+    <!-- Form Container -->
+    <VBox spacing="15" maxWidth="500" alignment="CENTER"
+          style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 8; -fx-border-color: #bbdefb; -fx-border-radius: 8;">
+        
+        <Label text="➕ Đăng Ký Phiên Đấu Giá Mới"
+               style="-fx-text-fill: #0d47a1; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+        <!-- Item Name -->
+        <VBox spacing="5" alignment="CENTER_LEFT" fillWidth="true">
+            <Label text="Tên sản phẩm:" style="-fx-text-fill: #455a64; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+            <TextField fx:id="tfItemName" promptText="Nhập tên sản phẩm đấu giá..."
+                       style="-fx-background-color: white; -fx-text-fill: #212121; -fx-border-color: #bbdefb; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;"/>
+        </VBox>
+
+        <!-- Description -->
+        <VBox spacing="5" alignment="CENTER_LEFT" fillWidth="true">
+            <Label text="Mô tả sản phẩm:" style="-fx-text-fill: #455a64; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+            <TextField fx:id="tfDescription" promptText="Nhập thông tin mô tả chi tiết sản phẩm..."
+                       style="-fx-background-color: white; -fx-text-fill: #212121; -fx-border-color: #bbdefb; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;"/>
+        </VBox>
+
+        <!-- Starting Price & Item Type Row -->
+        <HBox spacing="15" fillHeight="true">
+            <!-- Starting Price -->
+            <VBox spacing="5" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                <Label text="Giá khởi điểm (₫):" style="-fx-text-fill: #455a64; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                <TextField fx:id="tfStartingPrice" promptText="Ví dụ: 1000000"
+                           style="-fx-background-color: white; -fx-text-fill: #212121; -fx-border-color: #bbdefb; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;"/>
+            </VBox>
+            <!-- Item Type -->
+            <VBox spacing="5" alignment="CENTER_LEFT" prefWidth="180">
+                <Label text="Loại sản phẩm:" style="-fx-text-fill: #455a64; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                <ComboBox fx:id="cbItemType" prefHeight="38" prefWidth="180"
+                          style="-fx-background-color: white; -fx-border-color: #bbdefb; -fx-border-radius: 5; -fx-background-radius: 5;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Duration Limit -->
+        <VBox spacing="5" alignment="CENTER_LEFT" fillWidth="true">
+            <Label text="Giới hạn thời gian đấu giá (Số phút):" style="-fx-text-fill: #455a64; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+            <TextField fx:id="tfDurationMinutes" text="10" promptText="Nhập thời lượng đấu giá tính bằng phút..."
+                       style="-fx-background-color: white; -fx-text-fill: #212121; -fx-border-color: #bbdefb; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8;"/>
+            <Label text="* Hệ thống sẽ tự tính thời gian đóng phiên dựa trên số phút bạn chọn." 
+                   style="-fx-text-fill: #78909c; -fx-font-size: 11px; -fx-font-style: italic;"/>
+        </VBox>
+
+        <!-- Submit Button -->
+        <Button text="🚀 Đăng bán sản phẩm &amp; Bắt đầu Đấu giá" onAction="#handleCreateProduct"
+                maxWidth="Infinity"
+                style="-fx-background-color: #1e88e5; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 5;
+                       -fx-cursor: hand; -fx-padding: 12;"/>
+    </VBox>
+
+    <!-- Status Feedback -->
+    <Label fx:id="statusLabel" text="" wrapText="true" textAlignment="CENTER"
+           style="-fx-text-fill: #0d47a1; -fx-font-size: 13px; -fx-font-weight: bold;"/>
 </VBox>

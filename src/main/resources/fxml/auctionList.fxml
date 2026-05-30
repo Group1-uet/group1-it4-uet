@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="auction.client.AuctionListController"
-      spacing="10" style="-fx-background-color: #1a1a2e;">
+      spacing="10" style="-fx-background-color: #f0f4f8;">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
@@ -14,31 +14,35 @@
     <HBox alignment="CENTER_LEFT" spacing="15">
         <VBox spacing="5">
             <Label text="🏆 Danh sách Phiên Đấu giá"
-                   style="-fx-text-fill: #e94560; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+                   style="-fx-text-fill: #0d47a1; -fx-font-size: 20px; -fx-font-weight: bold;"/>
             <Label fx:id="labelUserWelcome" text=""
-                   style="-fx-text-fill: #a8a8b3; -fx-font-size: 13px;"/>
+                   style="-fx-text-fill: #455a64; -fx-font-size: 13px; -fx-font-weight: bold;"/>
         </VBox>
         <HBox HBox.hgrow="ALWAYS"/>
         <Button text="🔄 Làm mới" onAction="#handleRefresh"
-                style="-fx-background-color: #16213e; -fx-text-fill: #a8a8b3;
-                       -fx-border-color: #e94560; -fx-border-radius: 5;
-                       -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15;"/>
+                style="-fx-background-color: #e1eaf4; -fx-text-fill: #1565c0;
+                       -fx-border-color: #bbdefb; -fx-border-radius: 5;
+                       -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15; -fx-font-weight: bold;"/>
+        <Button text="💰 Nạp tiền" onAction="#handleDeposit"
+                style="-fx-background-color: #43a047; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-background-radius: 5;
+                       -fx-cursor: hand; -fx-padding: 8 15;"/>
         <Button text="🚀 Tham gia Đấu giá" onAction="#handleJoinAuction"
-                style="-fx-background-color: #e94560; -fx-text-fill: white;
+                style="-fx-background-color: #1e88e5; -fx-text-fill: white;
                        -fx-font-weight: bold; -fx-background-radius: 5;
                        -fx-cursor: hand; -fx-padding: 8 15;"/>
         <Button text="🚪 Đăng xuất" onAction="#handleLogout"
-                style="-fx-background-color: transparent; -fx-text-fill: #e94560;
-                       -fx-border-color: #e94560; -fx-border-radius: 5;
-                       -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15;"/>
+                style="-fx-background-color: transparent; -fx-text-fill: #c62828;
+                       -fx-border-color: #ef9a9a; -fx-border-radius: 5;
+                       -fx-background-radius: 5; -fx-cursor: hand; -fx-padding: 8 15; -fx-font-weight: bold;"/>
     </HBox>
 
     <!-- Table -->
     <TableView fx:id="auctionTable" VBox.vgrow="ALWAYS"
-               style="-fx-background-color: #16213e; -fx-border-color: #0f3460; -fx-border-radius: 5;">
+               style="-fx-background-color: white; -fx-border-color: #bbdefb; -fx-border-radius: 5; -fx-background-radius: 5;">
         <columns>
             <TableColumn fx:id="colId" text="ID Phiên" prefWidth="140"
-                         style="-fx-text-fill: white; -fx-alignment: CENTER;"/>
+                         style="-fx-text-fill: #212121; -fx-alignment: CENTER;"/>
             <TableColumn fx:id="colItemId" text="Sản phẩm" prefWidth="200"/>
             <TableColumn fx:id="colCurrentBid" text="Giá hiện tại (₫)" prefWidth="160"/>
             <TableColumn fx:id="colStatus" text="Trạng thái" prefWidth="130"/>
@@ -46,11 +50,11 @@
         </columns>
         <placeholder>
             <Label text="Không có phiên đấu giá nào đang mở."
-                   style="-fx-text-fill: #a8a8b3; -fx-font-size: 14px;"/>
+                   style="-fx-text-fill: #78909c; -fx-font-size: 14px;"/>
         </placeholder>
     </TableView>
 
     <!-- Status Bar -->
     <Label fx:id="statusLabel" text=""
-           style="-fx-text-fill: #a8a8b3; -fx-font-size: 12px;"/>
+           style="-fx-text-fill: #546e7a; -fx-font-size: 12px; -fx-font-weight: bold;"/>
 </VBox>

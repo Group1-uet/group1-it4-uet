@@ -99,11 +99,11 @@ public class LoginController {
     }
 
     private void setTabActive(Button button) {
-        button.setStyle("-fx-background-color: #e94560; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
+        button.setStyle("-fx-background-color: #1e88e5; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
     }
 
     private void setTabInactive(Button button) {
-        button.setStyle("-fx-background-color: transparent; -fx-text-fill: #a8a8b3; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
+        button.setStyle("-fx-background-color: transparent; -fx-text-fill: #1565c0; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
     }
 
     // --- BUTTON EVENT HANDLERS ---

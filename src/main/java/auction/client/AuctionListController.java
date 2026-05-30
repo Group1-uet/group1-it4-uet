@@ -103,6 +103,35 @@ public class AuctionListController {
         }
     }
 
+    @FXML
+    private void handleDeposit() {
+        TextInputDialog dialog = new TextInputDialog("500000");
+        dialog.setTitle("Nạp tiền tài khoản");
+        dialog.setHeaderText("💰 Nạp tiền vào tài khoản Đấu giá");
+        dialog.setContentText("Nhập số tiền muốn nạp (₫):");
+
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: #f0f4f8;");
+        dialogPane.lookup(".label").setStyle("-fx-text-fill: #0d47a1; -fx-font-weight: bold;");
+
+        dialog.showAndWait().ifPresent(amountStr -> {
+            try {
+                double amount = Double.parseDouble(amountStr.trim());
+                if (amount <= 0) {
+                    statusLabel.setText("⚠️ Số tiền nạp phải lớn hơn 0!");
+                    return;
+                }
+                
+                Message req = new Message(MessageType.DEPOSIT_REQUEST);
+                req.put("amount", String.valueOf(amount));
+                ClientApp.getNetwork().sendMessage(req);
+                statusLabel.setText("Đang gửi yêu cầu nạp tiền...");
+            } catch (NumberFormatException e) {
+                statusLabel.setText("⚠️ Số tiền nhập vào không hợp lệ!");
+            }
+        });
+    }
+
     private void onMessageReceived(Message msg) {
         if (msg.getType() == MessageType.GET_AUCTIONS_RESPONSE) {
             String auctionsJson = msg.get("auctions");
@@ -112,6 +141,19 @@ public class AuctionListController {
             Platform.runLater(() -> {
                 auctionData.setAll(auctions);
                 statusLabel.setText("Đã tải " + auctions.size() + " phiên đấu giá.");
+            });
+        } else if (msg.getType() == MessageType.DEPOSIT_RESPONSE) {
+            String status = msg.get("status");
+            Platform.runLater(() -> {
+                if ("SUCCESS".equals(status)) {
+                    double newBalance = Double.parseDouble(msg.get("balance"));
+                    ClientNetwork net = ClientApp.getNetwork();
+                    net.setCurrentUserBalance(newBalance);
+                    labelUserWelcome.setText("👋 Xin chào, " + net.getCurrentUsername() + " | 💰 Số dư: " + String.format("%,.0f ₫", net.getCurrentUserBalance()));
+                    statusLabel.setText("✅ Nạp tiền thành công! Số dư hiện tại: " + String.format("%,.0f ₫", newBalance));
+                } else {
+                    statusLabel.setText("❌ Nạp tiền thất bại: " + msg.get("reason"));
+                }
             });
         } else if (msg.getType() == MessageType.NEW_BID || msg.getType() == MessageType.AUCTION_CLOSED || msg.getType() == MessageType.AUCTION_EXTENDED) {
             // Reload list when updates occur

@@ -5,19 +5,19 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="auction.client.AuctionListController"
-      alignment="CENTER" spacing="20" style="-fx-background-color: #1a1a2e;">
+      alignment="CENTER" spacing="20" style="-fx-background-color: #f0f4f8;">
     <padding>
         <Insets top="50" right="50" bottom="50" left="50"/>
     </padding>
 
     <Label text="🛡 Kênh Quản Trị Viên (Admin Dashboard)"
-           style="-fx-text-fill: #e94560; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+           style="-fx-text-fill: #0d47a1; -fx-font-size: 22px; -fx-font-weight: bold;"/>
            
     <Label text="Tính năng quản trị hệ thống và kiểm duyệt đang được phát triển..."
-           style="-fx-text-fill: #a8a8b3; -fx-font-size: 14px;"/>
+           style="-fx-text-fill: #455a64; -fx-font-size: 14px; -fx-font-weight: bold;"/>
 
     <Button text="🚪 Đăng xuất tài khoản" onAction="#handleLogout"
-            style="-fx-background-color: #e94560; -fx-text-fill: white;
+            style="-fx-background-color: #1e88e5; -fx-text-fill: white;
                    -fx-font-size: 14px; -fx-font-weight: bold;
                    -fx-padding: 10 20; -fx-background-radius: 5; -fx-cursor: hand;"/>
                    

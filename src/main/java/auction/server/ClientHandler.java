@@ -82,6 +82,9 @@ public class ClientHandler implements Runnable {
                 case FORGOT_PASSWORD_REQUEST:
                     handleForgotPassword(request);
                     break;
+                case DEPOSIT_REQUEST:
+                    handleDeposit(request);
+                    break;
                 case GET_AUCTIONS_REQUEST:
                     handleGetAuctions(request);
                     break;
@@ -196,6 +199,44 @@ public class ClientHandler implements Runnable {
         userDAO.updateUser(user);
         response.put("status", "SUCCESS");
         sendMessage(response);
+    }
+
+    private void handleDeposit(Message request) {
+        Message response = new Message(MessageType.DEPOSIT_RESPONSE);
+        if (this.userId == null) {
+            response.put("status", "FAILED");
+            response.put("reason", "Vui lòng đăng nhập trước!");
+            sendMessage(response);
+            return;
+        }
+
+        try {
+            double amount = Double.parseDouble(request.get("amount"));
+            if (amount <= 0) {
+                response.put("status", "FAILED");
+                response.put("reason", "Số tiền nạp phải lớn hơn 0!");
+                sendMessage(response);
+                return;
+            }
+
+            User user = userDAO.getUserById(this.userId);
+            if (user instanceof Bidder) {
+                Bidder bidder = (Bidder) user;
+                bidder.addBalance(amount);
+                userDAO.updateUser(bidder);
+                response.put("status", "SUCCESS");
+                response.put("balance", String.valueOf(bidder.getAccountBalance()));
+                System.out.println("[Deposit] Success for user: " + this.userId + " | amount=" + amount + " | newBalance=" + bidder.getAccountBalance());
+            } else {
+                response.put("status", "FAILED");
+                response.put("reason", "Chỉ tài khoản Người mua (Bidder) mới có thể nạp tiền!");
+            }
+            sendMessage(response);
+        } catch (Exception e) {
+            response.put("status", "FAILED");
+            response.put("reason", "Lỗi nạp tiền: " + e.getMessage());
+            sendMessage(response);
+        }
     }
 
     private void handleGetAuctions(Message request) {
