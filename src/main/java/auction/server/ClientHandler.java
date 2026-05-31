@@ -103,6 +103,9 @@ public class ClientHandler implements Runnable {
                 case AUTO_BID_CANCEL:
                     handleCancelAutoBid(request);
                     break;
+                case DELETE_AUCTION_REQUEST:
+                    handleDeleteAuction(request);
+                    break;
                 default:
                     Message unknownMsg = new Message(MessageType.ERROR);
                     unknownMsg.put("reason", "UNKNOWN_COMMAND");
@@ -397,6 +400,42 @@ public class ClientHandler implements Runnable {
             String auctionId = request.get("auctionId");
             AutoBidManager.getInstance().unregister(auctionId, this.userId);
             System.out.println("[AutoBid] Canceled for user: " + this.userId + " on auction: " + auctionId);
+        }
+    private void handleDeleteAuction(Message request) {
+        Message response = new Message(MessageType.DELETE_AUCTION_RESPONSE);
+        if (this.userId == null) {
+            response.put("status", "FAILED");
+            response.put("reason", "Vui lòng đăng nhập trước!");
+            sendMessage(response);
+            return;
+        }
+
+        // Verify role is ADMIN
+        User user = userDAO.getUserById(this.userId);
+        if (user == null || !"ADMIN".equalsIgnoreCase(user.getRole())) {
+            response.put("status", "FAILED");
+            response.put("reason", "Chỉ Quản trị viên mới có quyền hủy phiên đấu giá!");
+            sendMessage(response);
+            return;
+        }
+
+        try {
+            String auctionId = request.get("auctionId");
+            auctionDAO.deleteAuction(auctionId);
+            response.put("status", "SUCCESS");
+            response.put("auctionId", auctionId);
+            sendMessage(response);
+
+            // Broadcast that an auction was deleted to refresh all active clients
+            Message listUpdate = new Message(MessageType.GET_AUCTIONS_RESPONSE);
+            listUpdate.put("auctions", gson.toJson(auctionDAO.getAllAuctions()));
+            NotificationManager.getInstance().broadcast(listUpdate);
+
+            System.out.println("[Admin Override] Auction deleted by Admin: " + auctionId);
+        } catch (Exception e) {
+            response.put("status", "FAILED");
+            response.put("reason", "Lỗi hủy phiên: " + e.getMessage());
+            sendMessage(response);
         }
     }
 

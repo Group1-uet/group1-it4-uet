@@ -25,5 +25,7 @@ public enum MessageType {
     NEW_BID,
     NOTIFICATION,
     ERROR,
+    DELETE_AUCTION_REQUEST,
+    DELETE_AUCTION_RESPONSE,
     UNKNOWN
 }
