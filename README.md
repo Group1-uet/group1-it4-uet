@@ -151,6 +151,28 @@ Nếu không muốn dùng dòng lệnh, bạn có thể chạy bằng nút bấm
 
 ---
 
+### 🌐 CÁCH 3: HƯỚNG DẪN CHẠY TRÊN NHIỀU MÁY TRONG CÙNG MẠNG LAN
+
+Hệ thống được thiết kế hoàn hảo để chạy đồng thời trên nhiều máy tính khác nhau trong cùng một mạng LAN (kết nối chung Wifi hoặc mạng dây). Bạn chỉ cần chỉ định **1 máy làm Server**, các máy còn lại chỉ cần chạy **Client (AppLauncher)** để kết nối tới.
+
+#### 1. Trên máy làm Server (Chạy Server & Lấy IP):
+*   **Khởi động Server:** 
+    *   Mở tệp `src/main/java/auction/server/AuctionServer.java` trong IDE và nhấn **Run** (hoặc chạy lệnh terminal khởi động server như ở Cách 1).
+*   **Cách lấy địa chỉ IP của máy Server:**
+    *   **Trên Windows:** Mở Command Prompt (`cmd`) hoặc PowerShell, nhập lệnh `ipconfig` rồi tìm dòng **IPv4 Address** (ví dụ: `192.168.1.15`).
+    *   **Trên macOS / Linux:** Mở Terminal, nhập lệnh `ifconfig` hoặc `ip a` rồi tìm địa chỉ IP `inet` của card mạng đang kết nối (thường có dạng `192.168.x.x` hoặc `10.x.x.x`).
+    *   *Chia sẻ địa chỉ IP này cho các máy Client khác.*
+
+#### 2. Trên các máy Client khác (Chỉ chạy AppLauncher):
+*   **Khởi động Client:**
+    *   **Chỉ chạy duy nhất AppLauncher:** Trên các máy này, bạn **không cần chạy Server**. Hãy mở tệp **`src/main/java/auction/client/AppLauncher.java`** trong IDE và bấm **Run** (hoặc chạy lệnh terminal khởi động client `mvn javafx:run`).
+*   **Kết nối tới Server:**
+    *   Ngay trên màn hình Đăng nhập của ứng dụng Client, bạn sẽ thấy ô **🌐 IP Server** ở phía trên cùng.
+    *   Hãy xóa chữ `localhost` mặc định đi và nhập chính xác địa chỉ IP của máy Server (ví dụ: `192.168.1.15`).
+    *   Giờ đây, bạn có thể Đăng nhập / Đăng ký để bắt đầu trải nghiệm đấu giá thời gian thực đồng bộ giữa tất cả các máy!
+
+---
+
 ## 🏆 5. Danh sách các chức năng đã hoàn thành 100%
 
 Hệ thống đã hoàn thành đầy đủ và đạt trạng thái tối ưu nhất phục vụ cho việc chấm bài tập lớn:
@@ -179,6 +201,9 @@ Hệ thống đã hoàn thành đầy đủ và đạt trạng thái tối ưu n
     *   *Thread-safe Synchronized:* Đảm bảo tuyệt đối không xảy ra tranh chấp dữ liệu khi nhiều Client cùng bấm nút đặt giá tại cùng một mili-giây.
     *   *Anti-sniping:* Tự động gia hạn thêm 60 giây nếu có lượt đặt giá trong 60 giây cuối cùng của phiên, tăng tính cạnh tranh công bằng.
     *   *Auto-Seeding Database:* Tự động sinh tệp CSDL SQLite và nạp dữ liệu mẫu sạch sẽ ngay lần đầu khởi chạy hệ thống giúp việc chấm bài tập lớn trở nên dễ dàng nhất có thể!
-
 ---
-*© 2026 - Nhóm 01 - UET - Dự án đạt chuẩn xuất sắc môn Lập trình nâng cao*
+*© 2026 - Nhóm 01*
+
+📌 **Tài liệu đính kèm:**
+*   [📄 Báo cáo dự án Hệ thống Đấu giá Trực tuyến (Google Drive)](https://drive.google.com/file/d/10gND979eeM7a_zzYK0a1thQ4rND3hM1j/view?fbclid=IwY2xjawSJRt5leHRuA2FlbQIxMABicmlkETFwS3haUzBNb21DdXRoeE1Bc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHsTDRerZ81XZQ9Byn3ofYHGoouNepCGVFJ872-pp_JeUro75AFaB0hMtzEWo_aem_AwJ-czOa708IgAmxUE3UIQ)
+*   [🎥 Video Demo giới thiệu & hướng dẫn sử dụng (Google Drive)](https://drive.google.com/file/d/1AcaZljeePuhhGz7lfP0vXnqnRKi_uArK/view?fbclid=IwY2xjawSJR1hleHRuA2FlbQIxMABicmlkETFwS3haUzBNb21DdXRoeE1Bc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHtnxVjUpIQ64A5qA1Rxj0R4YtKKScF9acep8P4zTlZWMoBxuS3YzwDqKrmx9_aem_HgCWmNqQ88dEuNpXOB_1ug)
