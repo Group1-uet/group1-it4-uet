@@ -89,11 +89,7 @@ public class AdminController {
 
         colUserBalance.setCellValueFactory(cellData -> {
             User u = cellData.getValue();
-            if (u instanceof Bidder) {
-                return new javafx.beans.property.SimpleDoubleProperty(((Bidder) u).getAccountBalance()).asObject();
-            } else {
-                return new javafx.beans.property.SimpleDoubleProperty(0.0).asObject();
-            }
+            return new javafx.beans.property.SimpleDoubleProperty(u.getBalance()).asObject();
         });
 
         usersTable.setItems(userData);

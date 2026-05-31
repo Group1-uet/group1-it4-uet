@@ -2,11 +2,12 @@ package auction.model;
 
 import java.util.Objects;
 
-public abstract class User extends Entity {
+public class User extends Entity {
     protected String username;
     protected String password;
     protected String email;
     protected String role;
+    protected double balance;
 
     public User(String id, String username, String password, String email, String role) {
         super(id);
@@ -14,6 +15,15 @@ public abstract class User extends Entity {
         this.password = password;
         this.email = email;
         this.role = role;
+        this.balance = 0.0;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public String getUsername() {
