@@ -1,6 +1,8 @@
 package auction.client;
 
 import auction.model.Auction;
+import auction.model.User;
+import auction.model.Bidder;
 import auction.network.Message;
 import auction.network.MessageType;
 import com.google.gson.Gson;
@@ -18,39 +20,35 @@ import java.util.List;
 
 public class AdminController {
 
-    // Left Panel - Auction Management
-    @FXML
-    private TableView<Auction> auctionTable;
-    @FXML
-    private TableColumn<Auction, String> colId;
-    @FXML
-    private TableColumn<Auction, String> colItemId;
-    @FXML
-    private TableColumn<Auction, Double> colCurrentBid;
-    @FXML
-    private TableColumn<Auction, String> colStatus;
-    @FXML
-    private TableColumn<Auction, String> colEndTime;
+    // Tab 1 - Auction Management
+    @FXML private TableView<Auction> auctionTable;
+    @FXML private TableColumn<Auction, String> colId;
+    @FXML private TableColumn<Auction, String> colItemId;
+    @FXML private TableColumn<Auction, Double> colCurrentBid;
+    @FXML private TableColumn<Auction, String> colStatus;
+    @FXML private TableColumn<Auction, String> colEndTime;
 
-    // Right Panel - Create Auction
-    @FXML
-    private TextField tfItemName;
-    @FXML
-    private TextField tfDescription;
-    @FXML
-    private TextField tfStartingPrice;
-    @FXML
-    private ComboBox<String> cbItemType;
-    @FXML
-    private TextField tfDurationMinutes;
+    // Create Auction Form
+    @FXML private TextField tfItemName;
+    @FXML private TextField tfDescription;
+    @FXML private TextField tfStartingPrice;
+    @FXML private ComboBox<String> cbItemType;
+    @FXML private TextField tfDurationMinutes;
+
+    // Tab 2 - User Management (NEW)
+    @FXML private TableView<User> usersTable;
+    @FXML private TableColumn<User, String> colUserId;
+    @FXML private TableColumn<User, String> colUsername;
+    @FXML private TableColumn<User, String> colEmail;
+    @FXML private TableColumn<User, String> colRole;
+    @FXML private TableColumn<User, Double> colUserBalance;
 
     // Common
-    @FXML
-    private Label labelWelcome;
-    @FXML
-    private Label statusLabel;
+    @FXML private Label labelWelcome;
+    @FXML private Label statusLabel;
 
     private ObservableList<Auction> auctionData = FXCollections.observableArrayList();
+    private ObservableList<User> userData = FXCollections.observableArrayList();
     private final Gson gson = auction.network.GsonHelper.getGson();
 
     @FXML
@@ -58,7 +56,7 @@ public class AdminController {
         ClientNetwork net = ClientApp.getNetwork();
         labelWelcome.setText("👋 Xin chào, " + net.getCurrentUsername() + " | Kênh Quản Trị Hệ Thống (Super-User)");
 
-        // Setup Table columns
+        // 1. Setup Auction Table columns
         colId.setCellValueFactory(new PropertyValueFactory<>("auctionId"));
         colItemId.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         colCurrentBid.setCellValueFactory(new PropertyValueFactory<>("currentHighestBid"));
@@ -67,7 +65,6 @@ public class AdminController {
 
         auctionTable.setItems(auctionData);
 
-        // Custom cell factory to format currency
         colCurrentBid.setCellFactory(tc -> new TableCell<Auction, Double>() {
             @Override
             protected void updateItem(Double price, boolean empty) {
@@ -80,29 +77,69 @@ public class AdminController {
             }
         });
 
-        // Setup Combo box
+        // 2. Setup Create Auction Form
         cbItemType.getItems().addAll("ELECTRONICS", "ART", "VEHICLE");
         cbItemType.setValue("ELECTRONICS");
 
+        // 3. Setup Users Table columns
+        colUserId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+
+        colUserBalance.setCellValueFactory(cellData -> {
+            User u = cellData.getValue();
+            if (u instanceof Bidder) {
+                return new javafx.beans.property.SimpleDoubleProperty(((Bidder) u).getAccountBalance()).asObject();
+            } else {
+                return new javafx.beans.property.SimpleDoubleProperty(0.0).asObject();
+            }
+        });
+
+        usersTable.setItems(userData);
+
+        colUserBalance.setCellFactory(tc -> new TableCell<User, Double>() {
+            @Override
+            protected void updateItem(Double balance, boolean empty) {
+                super.updateItem(balance, empty);
+                if (empty || balance == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%,.0f ₫", balance));
+                }
+            }
+        });
+
         statusLabel.setText("");
 
-        // Register message listener
+        // Register network listener
         ClientApp.getNetwork().setOnMessageReceived(this::onMessageReceived);
 
-        // Load active auctions
+        // Load data on startup
         loadAuctions();
+        loadUsers();
     }
 
     private void loadAuctions() {
         Message req = new Message(MessageType.GET_AUCTIONS_REQUEST);
         ClientApp.getNetwork().sendMessage(req);
-        statusLabel.setText("⏳ Đang tải danh sách phiên đấu giá...");
+        statusLabel.setText("⏳ Đang tải danh sách đấu giá...");
         statusLabel.setStyle("-fx-text-fill: #0d47a1; -fx-font-weight: bold;");
+    }
+
+    private void loadUsers() {
+        Message req = new Message(MessageType.GET_USERS_REQUEST);
+        ClientApp.getNetwork().sendMessage(req);
     }
 
     @FXML
     private void handleRefresh() {
         loadAuctions();
+    }
+
+    @FXML
+    private void handleRefreshUsers() {
+        loadUsers();
     }
 
     @FXML
@@ -136,7 +173,6 @@ public class AdminController {
             return;
         }
 
-        // Show confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Xác nhận hủy phiên đấu giá");
         alert.setHeaderText("🛑 Bạn có chắc chắn muốn hủy phiên đấu giá này không?");
@@ -148,6 +184,37 @@ public class AdminController {
                 req.put("auctionId", selected.getAuctionId());
                 ClientApp.getNetwork().sendMessage(req);
                 statusLabel.setText("⏳ Đang gửi yêu cầu hủy phiên đấu giá...");
+                statusLabel.setStyle("-fx-text-fill: #0d47a1; -fx-font-weight: bold;");
+            }
+        });
+    }
+
+    @FXML
+    private void handleDeleteUser() {
+        User selected = usersTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            statusLabel.setText("⚠️ Vui lòng chọn một tài khoản để xóa!");
+            statusLabel.setStyle("-fx-text-fill: #c62828; -fx-font-weight: bold;");
+            return;
+        }
+
+        if (ClientApp.getNetwork().getCurrentUserId().equals(selected.getId())) {
+            statusLabel.setText("⚠️ Bạn không thể tự xóa tài khoản của chính mình!");
+            statusLabel.setStyle("-fx-text-fill: #c62828; -fx-font-weight: bold;");
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Xác nhận xóa tài khoản");
+        alert.setHeaderText("🛑 Bạn có chắc chắn muốn xóa tài khoản này?");
+        alert.setContentText("Hành động này sẽ xóa người dùng khỏi CSDL SQLite và không thể khôi phục.");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                Message req = new Message(MessageType.DELETE_USER_REQUEST);
+                req.put("targetUserId", selected.getId());
+                ClientApp.getNetwork().sendMessage(req);
+                statusLabel.setText("⏳ Đang gửi yêu cầu xóa tài khoản...");
                 statusLabel.setStyle("-fx-text-fill: #0d47a1; -fx-font-weight: bold;");
             }
         });
@@ -182,7 +249,6 @@ public class AdminController {
                 return;
             }
 
-            // Calculate start and end times
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime endTime = now.plusMinutes(duration);
 
@@ -196,7 +262,7 @@ public class AdminController {
 
             statusLabel.setText("⏳ Đang tạo phiên đấu giá mới...");
             statusLabel.setStyle("-fx-text-fill: #0d47a1; -fx-font-weight: bold;");
-
+            
             ClientApp.getNetwork().sendMessage(req);
 
         } catch (NumberFormatException e) {
@@ -218,13 +284,22 @@ public class AdminController {
     private void onMessageReceived(Message msg) {
         if (msg.getType() == MessageType.GET_AUCTIONS_RESPONSE) {
             String auctionsJson = msg.get("auctions");
-            Type listType = new TypeToken<List<Auction>>() {
-            }.getType();
+            Type listType = new TypeToken<List<Auction>>(){}.getType();
             List<Auction> auctions = gson.fromJson(auctionsJson, listType);
 
             Platform.runLater(() -> {
                 auctionData.setAll(auctions);
                 statusLabel.setText("✅ Đã cập nhật danh sách gồm " + auctions.size() + " phiên đấu giá.");
+                statusLabel.setStyle("-fx-text-fill: #2e7d32; -fx-font-weight: bold;");
+            });
+        } else if (msg.getType() == MessageType.GET_USERS_RESPONSE) {
+            String usersJson = msg.get("users");
+            Type listType = new TypeToken<List<User>>(){}.getType();
+            List<User> users = gson.fromJson(usersJson, listType);
+
+            Platform.runLater(() -> {
+                userData.setAll(users);
+                statusLabel.setText("✅ Đã cập nhật danh sách người dùng.");
                 statusLabel.setStyle("-fx-text-fill: #2e7d32; -fx-font-weight: bold;");
             });
         } else if (msg.getType() == MessageType.CREATE_ITEM_RESPONSE) {
@@ -233,14 +308,10 @@ public class AdminController {
                 if ("SUCCESS".equals(status)) {
                     statusLabel.setText("🎉 Đăng bán & Tạo phiên đấu giá thành công!");
                     statusLabel.setStyle("-fx-text-fill: #2e7d32; -fx-font-weight: bold;");
-
-                    // Clear inputs
                     tfItemName.clear();
                     tfDescription.clear();
                     tfStartingPrice.clear();
                     tfDurationMinutes.setText("10");
-
-                    // Reload
                     loadAuctions();
                 } else {
                     statusLabel.setText("❌ Đăng bán thất bại: " + msg.get("reason"));
@@ -251,19 +322,27 @@ public class AdminController {
             String status = msg.get("status");
             Platform.runLater(() -> {
                 if ("SUCCESS".equals(status)) {
-                    statusLabel.setText("🎉 Đã hủy phiên đấu giá thành công khỏi hệ thống!");
+                    statusLabel.setText("🎉 Đã hủy phiên đấu giá thành công!");
                     statusLabel.setStyle("-fx-text-fill: #2e7d32; -fx-font-weight: bold;");
-
-                    // Reload
                     loadAuctions();
                 } else {
                     statusLabel.setText("❌ Hủy phiên thất bại: " + msg.get("reason"));
                     statusLabel.setStyle("-fx-text-fill: #c62828; -fx-font-weight: bold;");
                 }
             });
-        } else if (msg.getType() == MessageType.NEW_BID || msg.getType() == MessageType.AUCTION_CLOSED
-                || msg.getType() == MessageType.AUCTION_EXTENDED) {
-            // Live reload on changes
+        } else if (msg.getType() == MessageType.DELETE_USER_RESPONSE) {
+            String status = msg.get("status");
+            Platform.runLater(() -> {
+                if ("SUCCESS".equals(status)) {
+                    statusLabel.setText("🎉 Đã xóa tài khoản người dùng thành công!");
+                    statusLabel.setStyle("-fx-text-fill: #2e7d32; -fx-font-weight: bold;");
+                    loadUsers(); // Refresh users table
+                } else {
+                    statusLabel.setText("❌ Xóa tài khoản thất bại: " + msg.get("reason"));
+                    statusLabel.setStyle("-fx-text-fill: #c62828; -fx-font-weight: bold;");
+                }
+            });
+        } else if (msg.getType() == MessageType.NEW_BID || msg.getType() == MessageType.AUCTION_CLOSED || msg.getType() == MessageType.AUCTION_EXTENDED) {
             loadAuctions();
         }
     }

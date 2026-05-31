@@ -106,6 +106,12 @@ public class ClientHandler implements Runnable {
                 case DELETE_AUCTION_REQUEST:
                     handleDeleteAuction(request);
                     break;
+                case GET_USERS_REQUEST:
+                    handleGetUsers(request);
+                    break;
+                case DELETE_USER_REQUEST:
+                    handleDeleteUser(request);
+                    break;
                 default:
                     Message unknownMsg = new Message(MessageType.ERROR);
                     unknownMsg.put("reason", "UNKNOWN_COMMAND");
@@ -437,6 +443,77 @@ public class ClientHandler implements Runnable {
         } catch (Exception e) {
             response.put("status", "FAILED");
             response.put("reason", "Lỗi hủy phiên: " + e.getMessage());
+            sendMessage(response);
+        }
+    }
+
+    private void handleGetUsers(Message request) {
+        Message response = new Message(MessageType.GET_USERS_RESPONSE);
+        if (this.userId == null) {
+            response.put("status", "FAILED");
+            response.put("reason", "Vui lòng đăng nhập trước!");
+            sendMessage(response);
+            return;
+        }
+
+        User user = userDAO.getUserById(this.userId);
+        if (user == null || !"ADMIN".equalsIgnoreCase(user.getRole())) {
+            response.put("status", "FAILED");
+            response.put("reason", "Chỉ Quản trị viên mới có quyền xem danh sách tài khoản!");
+            sendMessage(response);
+            return;
+        }
+
+        try {
+            List<User> users = userDAO.getAllUsers();
+            for (User u : users) {
+                u.setPassword("********");
+            }
+            response.put("status", "SUCCESS");
+            response.put("users", gson.toJson(users));
+            sendMessage(response);
+        } catch (Exception e) {
+            response.put("status", "FAILED");
+            response.put("reason", "Lỗi tải danh sách người dùng: " + e.getMessage());
+            sendMessage(response);
+        }
+    }
+
+    private void handleDeleteUser(Message request) {
+        Message response = new Message(MessageType.DELETE_USER_RESPONSE);
+        if (this.userId == null) {
+            response.put("status", "FAILED");
+            response.put("reason", "Vui lòng đăng nhập trước!");
+            sendMessage(response);
+            return;
+        }
+
+        User user = userDAO.getUserById(this.userId);
+        if (user == null || !"ADMIN".equalsIgnoreCase(user.getRole())) {
+            response.put("status", "FAILED");
+            response.put("reason", "Chỉ Quản trị viên mới có quyền xóa tài khoản!");
+            sendMessage(response);
+            return;
+        }
+
+        try {
+            String targetUserId = request.get("targetUserId");
+            if (this.userId.equals(targetUserId)) {
+                response.put("status", "FAILED");
+                response.put("reason", "Bạn không thể tự xóa tài khoản của chính mình!");
+                sendMessage(response);
+                return;
+            }
+
+            userDAO.deleteUser(targetUserId);
+            response.put("status", "SUCCESS");
+            response.put("targetUserId", targetUserId);
+            sendMessage(response);
+
+            System.out.println("[Admin Override] User deleted by Admin: " + targetUserId);
+        } catch (Exception e) {
+            response.put("status", "FAILED");
+            response.put("reason", "Lỗi xóa tài khoản: " + e.getMessage());
             sendMessage(response);
         }
     }
