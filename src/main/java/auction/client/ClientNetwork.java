@@ -83,7 +83,8 @@ public class ClientNetwork {
     public void disconnect() {
         running = false;
         try {
-            if (socket != null) socket.close();
+            if (socket != null)
+                socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,15 +94,35 @@ public class ClientNetwork {
     }
 
     // Session getters and setters
-    public String getCurrentUserId() { return currentUserId; }
-    public void setCurrentUserId(String currentUserId) { this.currentUserId = currentUserId; }
+    public String getCurrentUserId() {
+        return currentUserId;
+    }
 
-    public String getCurrentUsername() { return currentUsername; }
-    public void setCurrentUsername(String currentUsername) { this.currentUsername = currentUsername; }
+    public void setCurrentUserId(String currentUserId) {
+        this.currentUserId = currentUserId;
+    }
 
-    public String getCurrentUserRole() { return currentUserRole; }
-    public void setCurrentUserRole(String currentUserRole) { this.currentUserRole = currentUserRole; }
+    public String getCurrentUsername() {
+        return currentUsername;
+    }
 
-    public double getCurrentUserBalance() { return currentUserBalance; }
-    public void setCurrentUserBalance(double currentUserBalance) { this.currentUserBalance = currentUserBalance; }
+    public void setCurrentUsername(String currentUsername) {
+        this.currentUsername = currentUsername;
+    }
+
+    public String getCurrentUserRole() {
+        return currentUserRole;
+    }
+
+    public void setCurrentUserRole(String currentUserRole) {
+        this.currentUserRole = currentUserRole;
+    }
+
+    public double getCurrentUserBalance() {
+        return currentUserBalance;
+    }
+
+    public void setCurrentUserBalance(double currentUserBalance) {
+        this.currentUserBalance = currentUserBalance;
+    }
 }

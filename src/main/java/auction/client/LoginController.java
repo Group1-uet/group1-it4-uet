@@ -13,35 +13,54 @@ import javafx.scene.layout.VBox;
 public class LoginController {
 
     // Tab buttons
-    @FXML private Button btnTabLogin;
-    @FXML private Button btnTabRegister;
-    @FXML private Button btnTabForgot;
+    @FXML
+    private Button btnTabLogin;
+    @FXML
+    private Button btnTabRegister;
+    @FXML
+    private Button btnTabForgot;
 
     // Panels
-    @FXML private VBox loginPanel;
-    @FXML private VBox registerPanel;
-    @FXML private VBox forgotPanel;
+    @FXML
+    private VBox loginPanel;
+    @FXML
+    private VBox registerPanel;
+    @FXML
+    private VBox forgotPanel;
 
     // Login Fields
-    @FXML private TextField loginUsernameField;
-    @FXML private PasswordField loginPasswordField;
-    @FXML private Button loginButton;
+    @FXML
+    private TextField loginUsernameField;
+    @FXML
+    private PasswordField loginPasswordField;
+    @FXML
+    private Button loginButton;
 
     // Register Fields
-    @FXML private TextField regUsernameField;
-    @FXML private PasswordField regPasswordField;
-    @FXML private TextField regEmailField;
-    @FXML private ComboBox<String> regRoleComboBox;
-    @FXML private Button registerButton;
+    @FXML
+    private TextField regUsernameField;
+    @FXML
+    private PasswordField regPasswordField;
+    @FXML
+    private TextField regEmailField;
+    @FXML
+    private ComboBox<String> regRoleComboBox;
+    @FXML
+    private Button registerButton;
 
     // Forgot Password Fields
-    @FXML private TextField forgotUsernameField;
-    @FXML private TextField forgotEmailField;
-    @FXML private PasswordField forgotPasswordField;
-    @FXML private Button forgotButton;
+    @FXML
+    private TextField forgotUsernameField;
+    @FXML
+    private TextField forgotEmailField;
+    @FXML
+    private PasswordField forgotPasswordField;
+    @FXML
+    private Button forgotButton;
 
     // Feedback Status
-    @FXML private Label statusLabel;
+    @FXML
+    private Label statusLabel;
 
     @FXML
     public void initialize() {
@@ -52,7 +71,7 @@ public class LoginController {
     }
 
     // --- TAB SWITCHING LOGIC ---
-    
+
     @FXML
     private void showLoginPanel() {
         loginPanel.setVisible(true);
@@ -99,11 +118,13 @@ public class LoginController {
     }
 
     private void setTabActive(Button button) {
-        button.setStyle("-fx-background-color: #1e88e5; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
+        button.setStyle(
+                "-fx-background-color: #1e88e5; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
     }
 
     private void setTabInactive(Button button) {
-        button.setStyle("-fx-background-color: transparent; -fx-text-fill: #1565c0; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
+        button.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: #1565c0; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 16; -fx-cursor: hand; -fx-padding: 8 0;");
     }
 
     // --- BUTTON EVENT HANDLERS ---
@@ -203,7 +224,7 @@ public class LoginController {
             if ("SUCCESS".equals(status)) {
                 try {
                     statusLabel.setText("✅ Đăng nhập thành công!");
-                    
+
                     // Save Session info to client network
                     ClientNetwork net = ClientApp.getNetwork();
                     net.setCurrentUserId(msg.get("userId"));
