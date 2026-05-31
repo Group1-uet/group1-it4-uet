@@ -63,6 +63,9 @@ public class LoginController {
     private Label statusLabel;
 
     @FXML
+    private TextField serverHostField;
+
+    @FXML
     public void initialize() {
         statusLabel.setText("");
         regRoleComboBox.getItems().addAll("BIDDER", "SELLER", "ADMIN");
@@ -142,6 +145,12 @@ public class LoginController {
         loginButton.setDisable(true);
         statusLabel.setText("⏳ Đang kết nối tới Server...");
 
+        String serverHost = serverHostField.getText().trim();
+        if (serverHost.isEmpty()) {
+            serverHost = "localhost";
+        }
+        ClientApp.getNetwork().setServerHost(serverHost);
+
         boolean connected = ClientApp.getNetwork().connect(this::onMessageReceived);
 
         if (connected) {
@@ -170,6 +179,12 @@ public class LoginController {
 
         registerButton.setDisable(true);
         statusLabel.setText("⏳ Đang kết nối gửi yêu cầu đăng ký...");
+
+        String serverHost = serverHostField.getText().trim();
+        if (serverHost.isEmpty()) {
+            serverHost = "localhost";
+        }
+        ClientApp.getNetwork().setServerHost(serverHost);
 
         boolean connected = ClientApp.getNetwork().connect(this::onMessageReceived);
 
@@ -201,6 +216,12 @@ public class LoginController {
 
         forgotButton.setDisable(true);
         statusLabel.setText("⏳ Đang gửi yêu cầu khôi phục mật khẩu...");
+
+        String serverHost = serverHostField.getText().trim();
+        if (serverHost.isEmpty()) {
+            serverHost = "localhost";
+        }
+        ClientApp.getNetwork().setServerHost(serverHost);
 
         boolean connected = ClientApp.getNetwork().connect(this::onMessageReceived);
 

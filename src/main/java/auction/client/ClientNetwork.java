@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.util.function.Consumer;
 
 public class ClientNetwork {
-    private static final String SERVER_HOST = "localhost";
+    private String serverHost = "localhost";
     private static final int SERVER_PORT = 8080;
 
     private Socket socket;
@@ -29,13 +29,23 @@ public class ClientNetwork {
     private String currentUserRole;
     private double currentUserBalance;
 
+    public String getServerHost() {
+        return serverHost;
+    }
+
+    public void setServerHost(String serverHost) {
+        if (serverHost != null && !serverHost.trim().isEmpty()) {
+            this.serverHost = serverHost.trim();
+        }
+    }
+
     public boolean connect(Consumer<Message> onMessageReceived) {
         this.onMessageReceived = onMessageReceived;
         if (socket != null && socket.isConnected() && !socket.isClosed()) {
             return true;
         }
         try {
-            socket = new Socket(SERVER_HOST, SERVER_PORT);
+            socket = new Socket(serverHost, SERVER_PORT);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             running = true;
