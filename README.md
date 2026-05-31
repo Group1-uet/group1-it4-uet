@@ -106,7 +106,7 @@ Mở cửa sổ Terminal tại thư mục gốc dự án:
 
 *   **Bước 1: Khởi động Server**
     ```bash
-    ./apache-maven-3.9.6/bin/mvn exec:java -Dexec.mainClass="auction.server.AuctionServer"
+    ./apache-maven-3.9.6/bin/mvn exec:java "-Dexec.mainClass=auction.server.AuctionServer"
     ```
     *(Hoặc sử dụng `mvn` nếu máy bạn đã cài đặt Maven toàn cục: `mvn exec:java -Dexec.mainClass="auction.server.AuctionServer"`)*
 *   **Bước 2: Khởi động Client**
