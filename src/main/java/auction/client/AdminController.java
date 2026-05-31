@@ -19,23 +19,36 @@ import java.util.List;
 public class AdminController {
 
     // Left Panel - Auction Management
-    @FXML private TableView<Auction> auctionTable;
-    @FXML private TableColumn<Auction, String> colId;
-    @FXML private TableColumn<Auction, String> colItemId;
-    @FXML private TableColumn<Auction, Double> colCurrentBid;
-    @FXML private TableColumn<Auction, String> colStatus;
-    @FXML private TableColumn<Auction, String> colEndTime;
+    @FXML
+    private TableView<Auction> auctionTable;
+    @FXML
+    private TableColumn<Auction, String> colId;
+    @FXML
+    private TableColumn<Auction, String> colItemId;
+    @FXML
+    private TableColumn<Auction, Double> colCurrentBid;
+    @FXML
+    private TableColumn<Auction, String> colStatus;
+    @FXML
+    private TableColumn<Auction, String> colEndTime;
 
     // Right Panel - Create Auction
-    @FXML private TextField tfItemName;
-    @FXML private TextField tfDescription;
-    @FXML private TextField tfStartingPrice;
-    @FXML private ComboBox<String> cbItemType;
-    @FXML private TextField tfDurationMinutes;
+    @FXML
+    private TextField tfItemName;
+    @FXML
+    private TextField tfDescription;
+    @FXML
+    private TextField tfStartingPrice;
+    @FXML
+    private ComboBox<String> cbItemType;
+    @FXML
+    private TextField tfDurationMinutes;
 
     // Common
-    @FXML private Label labelWelcome;
-    @FXML private Label statusLabel;
+    @FXML
+    private Label labelWelcome;
+    @FXML
+    private Label statusLabel;
 
     private ObservableList<Auction> auctionData = FXCollections.observableArrayList();
     private final Gson gson = auction.network.GsonHelper.getGson();
@@ -183,7 +196,7 @@ public class AdminController {
 
             statusLabel.setText("⏳ Đang tạo phiên đấu giá mới...");
             statusLabel.setStyle("-fx-text-fill: #0d47a1; -fx-font-weight: bold;");
-            
+
             ClientApp.getNetwork().sendMessage(req);
 
         } catch (NumberFormatException e) {
@@ -205,7 +218,8 @@ public class AdminController {
     private void onMessageReceived(Message msg) {
         if (msg.getType() == MessageType.GET_AUCTIONS_RESPONSE) {
             String auctionsJson = msg.get("auctions");
-            Type listType = new TypeToken<List<Auction>>(){}.getType();
+            Type listType = new TypeToken<List<Auction>>() {
+            }.getType();
             List<Auction> auctions = gson.fromJson(auctionsJson, listType);
 
             Platform.runLater(() -> {
@@ -219,7 +233,7 @@ public class AdminController {
                 if ("SUCCESS".equals(status)) {
                     statusLabel.setText("🎉 Đăng bán & Tạo phiên đấu giá thành công!");
                     statusLabel.setStyle("-fx-text-fill: #2e7d32; -fx-font-weight: bold;");
-                    
+
                     // Clear inputs
                     tfItemName.clear();
                     tfDescription.clear();
@@ -239,7 +253,7 @@ public class AdminController {
                 if ("SUCCESS".equals(status)) {
                     statusLabel.setText("🎉 Đã hủy phiên đấu giá thành công khỏi hệ thống!");
                     statusLabel.setStyle("-fx-text-fill: #2e7d32; -fx-font-weight: bold;");
-                    
+
                     // Reload
                     loadAuctions();
                 } else {
@@ -247,7 +261,8 @@ public class AdminController {
                     statusLabel.setStyle("-fx-text-fill: #c62828; -fx-font-weight: bold;");
                 }
             });
-        } else if (msg.getType() == MessageType.NEW_BID || msg.getType() == MessageType.AUCTION_CLOSED || msg.getType() == MessageType.AUCTION_EXTENDED) {
+        } else if (msg.getType() == MessageType.NEW_BID || msg.getType() == MessageType.AUCTION_CLOSED
+                || msg.getType() == MessageType.AUCTION_EXTENDED) {
             // Live reload on changes
             loadAuctions();
         }

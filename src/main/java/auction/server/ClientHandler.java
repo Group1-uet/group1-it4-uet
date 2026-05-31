@@ -401,6 +401,8 @@ public class ClientHandler implements Runnable {
             AutoBidManager.getInstance().unregister(auctionId, this.userId);
             System.out.println("[AutoBid] Canceled for user: " + this.userId + " on auction: " + auctionId);
         }
+    }
+
     private void handleDeleteAuction(Message request) {
         Message response = new Message(MessageType.DELETE_AUCTION_RESPONSE);
         if (this.userId == null) {
