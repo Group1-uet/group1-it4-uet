@@ -3,13 +3,12 @@ package auction.model;
 import java.util.Objects;
 
 public class Bidder extends User {
-    private double accountBalance;
     private int successfulBids;
     private int failedBids;
 
     public Bidder(String id, String username, String password, String email, double initialBalance) {
         super(id, username, password, email, "BIDDER");
-        this.accountBalance = initialBalance;
+        this.balance = initialBalance;
         this.successfulBids = 0;
         this.failedBids = 0;
     }
@@ -19,14 +18,14 @@ public class Bidder extends User {
     }
 
     public double getAccountBalance() {
-        return accountBalance;
+        return balance;
     }
 
     public void setAccountBalance(double accountBalance) {
         if (accountBalance < 0) {
             throw new IllegalArgumentException("Account balance cannot be negative");
         }
-        this.accountBalance = accountBalance;
+        this.balance = accountBalance;
     }
 
     public int getSuccessfulBids() {
@@ -46,7 +45,7 @@ public class Bidder extends User {
     }
 
     public boolean hasEnoughBalance(double bidAmount) {
-        return accountBalance >= bidAmount;
+        return balance >= bidAmount;
     }
 
     public void deductBalance(double amount) {
@@ -56,14 +55,14 @@ public class Bidder extends User {
         if (!hasEnoughBalance(amount)) {
             throw new IllegalArgumentException("Insufficient balance");
         }
-        this.accountBalance -= amount;
+        this.balance -= amount;
     }
 
     public void addBalance(double amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("Amount cannot be negative");
         }
-        this.accountBalance += amount;
+        this.balance += amount;
     }
 
     @Override
@@ -72,12 +71,12 @@ public class Bidder extends User {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Bidder bidder = (Bidder) o;
-        return Double.compare(bidder.accountBalance, accountBalance) == 0;
+        return Double.compare(bidder.balance, balance) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), accountBalance);
+        return Objects.hash(super.hashCode(), balance);
     }
 
     @Override
@@ -86,7 +85,7 @@ public class Bidder extends User {
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", accountBalance=" + accountBalance +
+                ", accountBalance=" + balance +
                 ", successfulBids=" + successfulBids +
                 ", failedBids=" + failedBids +
                 '}';

@@ -25,10 +25,7 @@ public class UserDAO {
             pstmt.setString(4, user.getEmail());
             pstmt.setString(5, user.getUsername()); // Tạm dùng username làm full_name
             pstmt.setString(6, user.getRole().toUpperCase());
-            double balance = 0.0;
-            if (user instanceof Bidder) {
-                balance = ((Bidder) user).getAccountBalance();
-            }
+            double balance = user.getBalance();
             pstmt.setDouble(7, balance);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -89,10 +86,7 @@ public class UserDAO {
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getEmail());
             pstmt.setString(4, user.getRole().toUpperCase());
-            double balance = 0.0;
-            if (user instanceof Bidder) {
-                balance = ((Bidder) user).getAccountBalance();
-            }
+            double balance = user.getBalance();
             pstmt.setDouble(5, balance);
             pstmt.setString(6, user.getId());
             pstmt.executeUpdate();
